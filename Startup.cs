@@ -52,8 +52,6 @@ namespace API_Users
                     .AllowCredentials();
                 });
             });
-
-
             services.AddMvc();
             services.AddTransient<IDbConnection>(x => CreateDbContext());
             services.AddTransient<UserRepository>();
