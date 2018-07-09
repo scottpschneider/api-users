@@ -10,6 +10,8 @@ namespace API_Users.Repositories
   {
     public UserRepository(IDbConnection db) : base(db)
     {
+      // _db = db;
+      //scott put this in, line 13, taken reference from Dotnet UserRepo livestream at 20:04
     }
 
     public UserReturnModel Register(RegisterUserModel creds)
@@ -19,15 +21,18 @@ namespace API_Users.Repositories
       //sql
       try
       {
-        string id = _db.ExecuteScalar<string>(@"
+        string Id = Guid.NewGuid().ToString();
+        _db.ExecuteScalar<string>(@"
                 INSERT INTO users (Username, Email, Password)
                 VALUES (@Username, @Email, @Password);
                 SELECT LAST_INSERT_ID();
             ", creds);
 
+      creds.Password = BCrypt.Net.BCrypt.HashPassword(creds.Password);
+
         return new UserReturnModel()
         {
-          Id = id,
+          Id = Id,
           Username = creds.Username,
           Email = creds.Email
         };
