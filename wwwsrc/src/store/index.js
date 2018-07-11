@@ -2,12 +2,6 @@ import vue from 'vue'
 import vuex from 'vuex'
 import axios from 'axios'
 import router from "../router"
-import Buefy from 'buefy'
-import 'buefy/lib/buefy.css'
-import VCalendar from 'v-calendar';
-import 'v-calendar/lib/v-calendar.min.css';
-
-vue.use(Buefy)
 
 vue.use(vuex)
 
@@ -16,7 +10,7 @@ var baseUrl = '//localhost:5000';
 var keeprApi = ''
 
 var auth = axios.create({
-    baseURL: baseUrl + "/auth",
+    baseURL: baseUrl + "/account",
     timeout: 3000,
     withCredentials: true
 })
