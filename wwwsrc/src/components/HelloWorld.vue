@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Scott is building a Keeper</h1>
+    <h1>Scott is building a Keepr</h1>
   </div>
 </template>
 
