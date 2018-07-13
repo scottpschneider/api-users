@@ -7,7 +7,7 @@
         <input type="password" v-model="log.password">
         <button type="submit">login</button>
       </form>
-      <p @click="regLog">Don't have a username? Register here</p>
+      <p @click="regLog">No username? Register here</p>
     </div>
    <div v-else>  
 
@@ -15,9 +15,9 @@
        <input type="text" placeholder="Email" v-model="newUser.email">
        <input type="text" placeholder="userName" v-model="newUser.userName">
        <input type="password" placeholder="password" v-model="newUser.password">
-       <button type="submit">register</button>
+       <button type="submit">Register</button>
       </form>
-      <p @click="regLog">Already a user? Login Here!</p>
+      <p @click="regLog">Currently a user? Straight to Login!</p>
    </div>
 
   </div>

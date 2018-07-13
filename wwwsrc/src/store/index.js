@@ -6,8 +6,8 @@ import router from "../router"
 vue.use(vuex)
 
 var production = !window.location.host.includes('localhost');
-var baseUrl = '//localhost:5000';
-var keeprApi = ''
+var baseUrl = production ? '//herokuapp.com/' : '//localhost:5000';
+//var keeprApi = ''
 
 var auth = axios.create({
     baseURL: baseUrl + "/account",
@@ -68,7 +68,7 @@ login({ commit, dispatch }, loginCredentials) {
         .then(res => {
             console.log("successfully logged in!")
             commit('setUser', res.data)
-            router.push({ name: 'Home' })
+            router.push({ name: 'HelloWorld' })
         })
 },
 logout({ commit, dispatch }) {
@@ -83,14 +83,14 @@ register({ commit, dispatch }, userData) {
     auth.post('/register', userData)
         .then(res => {
             console.log("Registration Successful")
-            router.push({ name: 'Home' }) // I changed this to just change the component 
+            router.push({ name: 'HelloWorld' }) // I changed this to just change the component 
         })
 },
 authenticate({ commit, dispatch }) {
     api.get('/authenticate')
         .then(res => {
             commit('setUser', res.data)
-            // router.push({ name: 'Home' })
+            // router.push({ name: 'HelloWorld' })
         })
         .catch(res => {
             console.log(res.data)
