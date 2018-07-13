@@ -6,9 +6,26 @@
 </template>
 
 <script>
+import navBar from "./components/NavBar"
+
 export default {
-  name: 'App'
-}
+  name: 'App',
+  components: {
+    navBar
+  },
+  mounted(){
+    this.$store.dispatch('authenticate')
+  },
+  data(){
+    return{}
+  },
+  computed: {
+
+  },
+  methods:{
+
+  }
+};
 </script>
 
 <style>

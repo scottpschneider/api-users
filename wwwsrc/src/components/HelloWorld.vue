@@ -37,23 +37,45 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      msg: "Welcome to Your KEEPR App"
+      msg: "Welcome to Your KEEPR App",
+    query: ''
     };
   },
   components: {
     SearchResults
   },
-  computed: {},
+  computed: {
+    user() {
+        return this.$store.state.user
+      }
+  },
   methods: {
     goToSearchField() {
       router.push({
         name: "SearchResults"
       });
-    }
+    },
+    getSearchResults() {
+        this.$store.dispatch('getSearchResults', this.query)
+      },
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.row{
+  font-family: 'Jura', sans-serif;
+    text-align: center
+  }
+   @media only screen and (min-device-width:415px ){
+#background {
+    background-image: url("../assets/sunsetMountainLake.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    color: white;
+    height: 100%;
+  }
+   }
 </style>

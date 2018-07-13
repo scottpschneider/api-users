@@ -7,6 +7,7 @@ import SearchResults from '@/components/SearchResults'
 import ProfilePage from '@/components/ProfilePage'
 import Auth from '@/components/Auth'
 import Favorites from '@/components/Favorites'
+//import GeneralSearchResults from '@components/Gen'
 
 
 Vue.use(Router)
@@ -30,11 +31,11 @@ export default new Router({
     name: 'ProfilePage',
     component: ProfilePage
     },
-    {
-      path: '/GeneralSearchResults',
-      name: 'GeneralSearchResults',
-      component: GeneralSearchResults
-    },
+    // {
+    //   path: '/GeneralSearchResults',
+    //   name: 'GeneralSearchResults',
+    //   component: GeneralSearchResults
+    // },
     {
       path: '/Auth',
       name: 'Auth',
