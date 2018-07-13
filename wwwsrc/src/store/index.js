@@ -6,8 +6,15 @@ import router from "../router"
 vue.use(vuex)
 
 var production = !window.location.host.includes('localhost');
-var baseUrl = production ? '//herokuapp.com/' : '//localhost:5000';
-//var keeprApi = ''
+var baseUrl = production ? '//keeprweb-api.herokuapp.com/' : '//localhost:5000';
+
+var keepSearch = axios.create({
+    headers: {
+        "X-Mashape-Key" : "WUU1lLesMimshTMLlxjAtkQGQMk6p1JQPB5jsnLPJCHfNJbugE"
+    },
+    baseURL: '//keeprweb-api.herokuapp.com' + '/search?query=',
+    timeout: 3000
+})
 
 var auth = axios.create({
     baseURL: baseUrl + "/account",
@@ -71,6 +78,21 @@ export default new vuex.Store({
         //         commit('setIngRecipes', ingRecipes)
         //     })
         // },
+        getSearchResults({dispatch, commit}, query) {
+            k eepSearch.get(query + '&number=6')
+            .then(res=>{
+                var keeps = res.data.results.map(keep => {
+                    return {
+                        name: keep.name,
+                        description: keep.description,
+                        userId: user.id
+                    }
+                })
+                console.log(res)
+                commit('setRecipes', recipes)
+                router.push({name: 'GeneralSearchResults'})
+            })
+        },
 
         authenticate({ commit, dispatch }) {
             server.get('/authenticate')

@@ -6,16 +6,16 @@
             <div class="row -flex justify-content-center">
       <div class="HelloWorld">
         <div class="desc container-fluid">
-          <h1>"With Keepr You'll find posted pics, and vids, and keep in your vault if you like</h1>
+          <h1>"Keepr You'll find posted pics, and vids, and keep in your vault</h1>
         </div>
         <div class="search container">
           <h3 class="search">What's Posted Today?</h3>
-          <router-link :to="{name:'SearchResults'}">
+          <!-- <router-link :to="{name:'SearchResults'}"> -->
             <form @submit.prevent="getSearchResults" class="form-inline my-2 my-lg-0">
           <input class="input" type="text" v-model="query" placeholder="search any">
           <button class="button" data-toggle="collapse" data-target=".navbar-collapse" @click="getSearchResults">Search Posts</button>
         </form>
-          </router-link>
+          <!-- </router-link> -->
         </div>
 
       </div>
