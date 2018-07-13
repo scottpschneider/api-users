@@ -37,6 +37,10 @@ export default new vuex.Store({
         setVault(state, vault) {
             state.vault = vault
         },
+        setVaultKeeps(state, vaultkeeps){
+            state.vaultkeeps = vaultkeeps
+        },
+
         setFavorites(state, favorites){
             console.log(favorites)
             state.favorites = favorites

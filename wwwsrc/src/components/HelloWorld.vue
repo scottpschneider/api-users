@@ -1,9 +1,9 @@
 <template>
 <div class="container-fluid" id="background">
     <div class="row d-flex justify-content-center">
-      </div>
       
-      <div class="row -flex justify-content-center">
+      </div>
+            <div class="row -flex justify-content-center">
       <div class="HelloWorld">
         <div class="desc container-fluid">
           <h1>"With Keepr You'll find posted pics, and vids, and keep in your vault if you like</h1>
