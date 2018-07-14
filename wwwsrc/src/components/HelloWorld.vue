@@ -112,7 +112,6 @@ export default {
     color: white;
     height: 100%;
   }
-   }
-
+}
 
 </style>
