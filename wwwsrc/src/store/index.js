@@ -62,6 +62,12 @@ export default new vuex.Store({
             })
             state.userKeeps.splice(i, 1)
         },
+        setKeep(state,keep){
+            state.keep=keep
+        },
+        setActiveKeep(state,keep){
+            state.activeKeep=keep
+        },
         setVault(state, vault) {
             state.vault = vault
         },
@@ -78,21 +84,50 @@ export default new vuex.Store({
 
     actions: {
 
-        // getSearchIngredients({dispatch, commit}, query) {
-        //     ingredientRecipeSearch.get(query + '&number=10'+ '&limitLicense=false' + '&ranking=1')
-        //     .then(res=>{ 
-        //         console.log(res)
-        //         var ingRecipes = res.data.map(recipe => {
-        //             return {
-        //                 title: recipe.title,
-        //                 image: recipe.image,
-
-        //                 spoonId: recipe.id
-        //             }
-        //         })
-        //         commit('setIngRecipes', ingRecipes)
-        //     })
-        // },
+        getKeeps({ commit,dispatch }){
+            server.get('/keep')
+            .then(res =>{
+                commit("setKeeps", res,data)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        },
+        getVaultKeeps({ commit,dispatch }, id){
+            server.get('/keep/vault/'+id)
+            .then(res =>{
+                commit("setUserKeeps", res.data)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        },
+        getUserKeeps({ commit,dispatch,rootState }){
+            server.get('/keep/user/'+ rootState.userModule.user.id)
+            .then(res =>{
+                commit("setUserKeeps", res.data)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        },
+        createKeep({ commit, dispatch, rootState}, keep){
+            keep.author = rootState.userModule.user.username
+            server.post('/keep/' +keep.vaultId, keep)
+            .then(res=>{
+                commit("setNewKeep", res.data)
+                server.post('/keep/tag/'+res.data.id, keep.tags)
+                .then(res=>{
+                    commit("setTags", res.data)
+                })
+                .catch(err =>{
+                    console.log(err)
+                })
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        },
         getSearchResults({dispatch, commit}, query) {
             keepSearch.get(query)
             .then(res=>{
