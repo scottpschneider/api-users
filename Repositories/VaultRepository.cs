@@ -63,6 +63,17 @@ namespace API_Users.Repositories
       }
       return false;
     }
+    public VaultKeeps CreateVaultKeep(VaultKeeps newVaultKeeps)
+    //need to ask about this, should be (vaultkeep newVaultKeep)
+    {
+      int id = _db.ExecuteScalar<int>(@"
+                INSERT INTO vaultkeeps (vaultId, keepId, userId)
+                VALUES (@VaultId, @KeepId, @UserId);
+                SELECT LAST_INSERT_ID();
+            ", newVaultKeeps);
+      newVaultKeeps.Id = id;
+      return newVaultKeeps;
+    }
 
     // Add get user favs to user
   }

@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="vaults row">
-      <div class="col-4" v-for="vault in vaults">
+      <div class="col-4" v-for="vault in vaults" :key="vault.id">
         <div class="card text-center">
           <a @click="selectVault(vault)">
             <h2 class="card-title">{{vault.title}}</h2>

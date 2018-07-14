@@ -263,8 +263,8 @@ export default new vuex.Store({
                 commit("setKeeps", res.data)
             })
         },
-        getVaults({ commit, dispatch, rootState }){
-            server.get('/vault/user/' + rootState.userModule.user.id)
+        getVaults({ commit, dispatch, state }){
+            server.get('/vault/author/' + state.user.id)
             .then(res =>{
                 commit("setVaults", res.data)
             })

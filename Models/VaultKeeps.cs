@@ -4,10 +4,10 @@ namespace API_Users.Models{
 
 public class VaultKeeps
 {
-public int id { get; set; }
-public string vualtId { get; set; }
-public string keepId { get; set; }
-public string userId { get; set; }
+public int Id { get; set; }
+public string VaultId { get; set; }
+public string KeepId { get; set; }
+public string UserId { get; set; }
 
 }
 

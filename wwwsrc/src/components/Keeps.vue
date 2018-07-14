@@ -16,17 +16,7 @@
                         <form v-on:submit.prevent="createKeep">
                             <input type="url" placeholder="Image Url" v-model="newKeep.img">
                             <input class="input" type="text" name="description" placeholder="Description" id="description" v-model="newKeep.description">
-                            <div class="mt-3">
-                                <div class="d-flex flex-row">
-                                    <span v-for="(tag, i) in tags" class="ml-3">{{tag.tagName}}
-                                        <a @click="removeTag(i)" class="remove-tag">X</a>
-                                    </span>
-                                </div>
-                                <form v-on:submit.prevent="addTag">
-                                    <input type="text" placeholder="Add Tag" v-model="tag.tagName">
-                                    <button type="submit" class="btn btn-primary">Tag Item</button>
-                                </form>
-                            </div>
+                            
                         </form>
                         <p id="error"></p>
                     </div>
@@ -43,8 +33,8 @@
             </div>      
       </div>
     <div class="keeps row">
-        <div v-for="keep in keeps" class="col-4">
-            <keeps-list :keep="keep" :viewable="true"></keeps-list>
+        <div v-for="keep in keeps" class="col-4" :key="keep.id">
+            <PublicPrivate :keep="keep" :viewable="true"></PublicPrivate>
         </div>
     </div>
   </div>
@@ -56,7 +46,7 @@ import publicPrivate from "./PublicPrivate.vue";
 export default {
   name: "Keeps",
   components: {
-    keepsList
+    publicPrivate
   },
   mounted() {
     this.$store.dispatch("getUserKeeps");

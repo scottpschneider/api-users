@@ -5,8 +5,8 @@
       <div class="buttons">
         <button v-if="viewable" class="btn btn-success" @click="selectKeep(keep)">view</button>
         <button type="button" v-if="user.id" class="btn btn-primary" data-toggle="modal" data-target="#keepModal" @click="activeKeep(keep)">keep</button>
-        <button v-if="user.id == keep.authorId && !keep.public" class="btn btn-warning" @click="public(keep)">public</button>
-        <button v-if="user.id == keep.authorId && keep.public" class="btn btn-warning" @click="public(keep)">private</button> 
+        <button v-if="user.id == keep.authorId && !keep.public" class="btn btn-warning" @click="makePublic(keep)">public</button>
+        <button v-if="user.id == keep.authorId && keep.public" class="btn btn-warning" @click="makePublic(keep)">private</button> 
         <button v-if="activeVault.id && deletable" class="btn btn-danger" @click="deleteShare(keep)">Delete</button>
       </div>
     </div>
@@ -62,7 +62,7 @@
         keep.vaultId = this.activeVault.id
         this.$store.dispatch("deleteShare", keep)
       },
-      public(keep) {
+      makePublic(keep) {
         this.checkLogin()
         keep.public = !keep.public
         this.$store.dispatch("editKeep", keep)

@@ -6,8 +6,8 @@
       </div>
     </div>
     <div class="keeps row">
-      <div v-for="keep in keeps" class="col-4">
-        <keeps-list :keep="keep" :viewable="true"></keeps-list>
+      <div v-for="keep in keeps" class="col-4" :key="keep.id">
+        <public-private :keep="keep" :viewable="true"></public-private>
       </div>
     </div>
   </div>

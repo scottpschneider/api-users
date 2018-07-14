@@ -45,5 +45,18 @@ namespace API_Users.Controllers
     {
       return _db.EditVault(id, newVault);
     }
+  [Authorize]
+  [HttpPost("vualtkeeps/{id}")]
+  public VaultKeeps CreateVaultKeep(int id, [FromBody]VaultKeeps newVaultKeeps)
+  {
+    if(ModelState.IsValid)
+    {
+      return _db.CreateVaultKeep(newVaultKeeps);
+    }
+    return null;
+  }
+
+  
+
   }
 }
