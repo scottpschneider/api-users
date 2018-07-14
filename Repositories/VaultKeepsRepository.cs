@@ -12,16 +12,16 @@ namespace API_Users.Repositories
 
     }
     // Create Vault
-    public Vault CreateVaultKeep(vaultkeep newVaultKeep)
+    public Vault CreateVaultKeep(vaultkeeps newVaultKeeps)
     //need to ask about this, should be (vaultkeep newVaultKeep)
     {
       int id = _db.ExecuteScalar<int>(@"
                 INSERT INTO vaults (name, description, userId)
                 VALUES (@Name, @Body, @AuthorId);
                 SELECT LAST_INSERT_ID();
-            ", newVaultKeep);
-      newVaultKeep.Id = id;
-      return newVaultKeep;
+            ", newVaultKeeps);
+      newVaultKeeps.Id = id;
+      return newVaultKeeps;
     }
     // GetAll Vault
     public IEnumerable<Vault> GetAll()
