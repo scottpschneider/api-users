@@ -1,24 +1,40 @@
 <template>
-  <div class="">
-
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <h2>{{vault.title}}</h2>
+      </div>
+    </div>
+    <div class="keeps row">
+      <div v-for="keep in keeps" class="col-4">
+        <keeps-list :keep="keep" :viewable="true"></keeps-list>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: '',
-    data() {
-      return {
+import publicPrivate from './PublicPrivate'
 
-      }
+export default {
+  name: "Vault",
+  components: {
+    publicPrivate
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    vault(){
+      return this.$store.state.vaultModule.activeVault;
     },
-    computed: {},
-    methods: {}
-  }
-
+    keeps(){
+      return this.$store.state.keepsModule.userKeeps;
+    }
+  },
+  methods: {}
+};
 </script>
 
 <style>
-
-
 </style>
