@@ -17,38 +17,33 @@
 </template>
 
 <script>
-import publicPrivate from './PublicPrivate'
+import publicPrivate from "./PublicPrivate";
 
-  export default {
-    name: 'Keep',
-    components:{
-      publicPrivate
+export default {
+  name: 'Keep',
+  components: {
+    publicPrivate
+  },
+  mounted() {
+    this.$store.dispatch("getTags", this.keep.id);
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    keep() {
+      return this.$store.state.keepsModule.keep;
     },
-    mounted(){
-      this.$store.dispatch("getTags", this.keep.id)
+    tags() {
+      return this.$store.state.keepsModule.tags;
     },
-    data() {
-      return {
-
-      }
-    },
-    computed: {
-      keep(){
-        return this.$store.state.keepsModule.keep
-      },
-      tags(){
-        return this.$store.state.keepsModule.tags
-      },
-      keeps(){
-        return this.$store.state.keepsModule.keeps
-      }
-    },
-    methods: {}
-  }
-
+    keeps() {
+      return this.$store.state.keepsModule.keeps;
+    }
+  },
+  methods: {}
+};
 </script>
 
 <style>
-
-
 </style>
