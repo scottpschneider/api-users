@@ -41,6 +41,7 @@ export default new vuex.Store({
             state.user = {}
         },
         setUser(state, user) {
+            debugger
             state.user = user
         },
         setKeeps(state, keeps) {
@@ -208,9 +209,11 @@ export default new vuex.Store({
         },
 
         authenticate({ commit, dispatch }) {
-            server.get('/authenticate')
-                .then(res => {
+            server.get('/account/authenticate')
+            .then(res => {
+                debugger
                     commit('setUser', res.data)
+                    dispatch("getVaults")
                     // router.push({ name: 'HelloWorld' })
                 })
                 .catch(res => {
@@ -264,12 +267,14 @@ export default new vuex.Store({
             })
         },
         getVaults({ commit, dispatch, state }){
+            debugger
             server.get('/vault/author/' + state.user.id)
             .then(res =>{
+                debugger
                 commit("setVaults", res.data)
             })
             .catch(err=>{
-                comsole.log(err)
+                console.log(err)
             })
         },
         getVaultList({ commit, dispatch, state }) {

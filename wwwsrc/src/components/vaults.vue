@@ -48,7 +48,7 @@
   export default {
     name: 'Vaults',
     mounted(){
-      this.$store.dispatch("getVaults")
+        //this.$store.dispatch("getVaults")
     },
     data() {
       return {
@@ -59,7 +59,10 @@
     },
     computed: {
       vaults(){
-        return this.$store.state.vaultModule.vaults
+        return this.$store.state.vaults
+      },
+      user() {
+        return this.$store.state.user
       }
     },
     methods: {
