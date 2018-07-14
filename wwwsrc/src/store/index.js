@@ -32,7 +32,7 @@ export default new vuex.Store({
     state: {
         user: {},
         keeps: {},
-        vaults: {},
+        vaults: [],
         favorites: [],
 
     },
@@ -281,7 +281,7 @@ export default new vuex.Store({
                 })
         },
         createVault({ commit, dispatch }, vault){
-            server.post('/vault', vault)
+            server.post('/api/vault', vault)
             .then(res =>{
                 commit("setNewVault", res.data)
             })

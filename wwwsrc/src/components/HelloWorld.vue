@@ -6,7 +6,7 @@
             <div class="row -flex justify-content-center">
       <div class="HelloWorld">
         <div class="desc container-fluid">
-          <h1>"Keepr You'll find posted pics, and vids, and keep in your vault</h1>
+          <h1>"Keepr, keep in your vault</h1>
         </div>
          <div class="">
     <div>
@@ -87,7 +87,7 @@ export default {
       });
     },
     createVault(){
-      this.$store.dispatch("createVault", vault)
+      this.$store.dispatch("createVault", this.vault)
     },
     getSearchResults() {
         this.$store.dispatch('getSearchResults', this.query)
