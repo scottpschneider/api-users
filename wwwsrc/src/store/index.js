@@ -89,7 +89,7 @@ export default new vuex.Store({
                     }
                 })
                 console.log(res)
-                commit('setRecipes', recipes)
+                commit('setKeeps', keeps)
                 router.push({name: 'GeneralSearchResults'})
             })
         },

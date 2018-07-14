@@ -8,6 +8,18 @@
         <div class="desc container-fluid">
           <h1>"Keepr You'll find posted pics, and vids, and keep in your vault</h1>
         </div>
+         <div class="">
+    <div>
+      <button class="btn btn-primary" @click="toggle">Vaults</button>
+      <button class="btn btn-primary" @click="toggle">Keeps</button>
+    </div>
+    <div v-if="bool">
+      <vaults></vaults>
+    </div>
+    <div v-if="!bool">
+      <keeps></keeps>
+    </div>
+  </div>
         <div class="search container">
           <h3 class="search">What's Posted Today?</h3>
           <!-- <router-link :to="{name:'SearchResults'}"> -->
@@ -32,17 +44,22 @@
 
 <script>
 import SearchResults from "./SearchResults.vue";
+import Vaults from "./Vaults";
+import Keeps from "./Keeps";
 
 export default {
   name: "HelloWorld",
   data() {
     return {
       msg: "Welcome to Your KEEPR App",
-    query: ''
+    query: '',
+    bool:true
     };
   },
   components: {
-    SearchResults
+    SearchResults, 
+    Vaults,
+    Keeps
   },
   computed: {
     user() {
@@ -50,6 +67,9 @@ export default {
       }
   },
   methods: {
+    toggle(){
+      this.bool=!this.bool
+    },
     goToSearchField() {
       router.push({
         name: "SearchResults"
@@ -68,6 +88,7 @@ export default {
   font-family: 'Jura', sans-serif;
     text-align: center
   }
+
    @media only screen and (min-device-width:415px ){
 #background {
     background-image: url("../assets/sunsetMountainLake.jpg");
@@ -78,4 +99,6 @@ export default {
     height: 100%;
   }
    }
+
+
 </style>
