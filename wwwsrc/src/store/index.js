@@ -68,8 +68,20 @@ export default new vuex.Store({
         setActiveKeep(state,keep){
             state.activeKeep=keep
         },
-        setVault(state, vault) {
+        setVaults(state, vault) {
             state.vault = vault
+        },
+        setNewVault(state, vault){
+            state.vaults.unshift(vault)
+        },
+        setActiveVault(state, vault){
+            state.activeVault = Vault
+        },
+        removeVault(state, vault){
+            var i = state.vaults.findIndex(v =>{
+                return v.id == vault.id
+            })
+            state.vaults.splice(i, 1)
         },
         setVaultKeeps(state, vaultkeeps) {
             state.vaultkeeps = vaultkeeps
@@ -128,6 +140,57 @@ export default new vuex.Store({
                 console.log(err)
             })
         },
+        deleteShare({ commit,dispatch }, share){
+             server.delete('/keep/share/' +share.vaultId+ '/' +share.id)
+             .then(res =>{
+                 commit("removeKeep", share.id)
+             })
+             .catch(err =>{
+                 console.log(err)
+             })
+        },
+        activeKeep({ diapatch,commit }, keep){
+            commit("setActiveKeep", keep)
+        },
+        editKeep({ commit, dispatch }, keep){
+            server.put('/keep/' +keep.id, keep)
+            .then(res =>{
+                commit("setKeep", res.data)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        },
+        selectKeep({ commit,dispatch }, keep){
+            server.get('/keep/' +keep.id)
+            .then(res =>{
+                commit("setKeep", res.data)
+                router.push({name: "Keep", params: {keepId: res.data.id}})
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        },
+        addShare({ commit, dispatch }, share){
+            server.post("/keep/add/" +share.keepId, share)
+            .then(res=>{
+                console.log(res.data)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        },
+        getTags({ commit, dispatch }, keepId){
+            server.get('/keep/tags/' +keepId)
+            .then(res =>{
+                commit("setTags", res.data)
+                dispatch("getRelated", res.data)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        },
+
         getSearchResults({dispatch, commit}, query) {
             keepSearch.get(query)
             .then(res=>{
@@ -140,7 +203,7 @@ export default new vuex.Store({
                 })
                 console.log(res)
                 commit('setKeeps', keeps)
-                router.push({name: 'GeneralSearchResults'})
+                router.push({name: 'SearchResults'})
             })
         },
 
@@ -194,6 +257,21 @@ export default new vuex.Store({
                     commit('setVaultList', res.data.items)
                 })
         },
+        getRelated({ dispatch, commit}, tags){
+            server.post('/keep/query', tags)
+            .then(res =>{
+                commit("setKeeps", res.data)
+            })
+        },
+        getVaults({ commit, dispatch, rootState }){
+            server.get('/vault/user/' + rootState.userModule.user.id)
+            .then(res =>{
+                commit("setVaults", res.data)
+            })
+            .catch(err=>{
+                comsole.log(err)
+            })
+        },
         getVaultList({ commit, dispatch, state }) {
             server.get('/api/vaultLists/' + state.user._id)
                 .then(res => {
@@ -201,17 +279,41 @@ export default new vuex.Store({
                     commit('setVaultList', res.data)
                 })
         },
+        createVault({ commit, dispatch }, vault){
+            server.post('/vault', vault)
+            .then(res =>{
+                commit("setNewVault", res.data)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        },
         setActiveVaultList({ commit, dispatch }, vaultList) {
             commit('setActiveVaultList', vaultList)
         },
-        // deleteFavorite({ commit, dispatch }) {
-        //     api.delete('/favorites/:id')
-        //         .then(res => {
-        //             console.log("Successfully deleted favorite!")
-        //             commit('deleteFavorite')
-
-        //         })
-        // },
+        selectVault({ commit, dispatch, rootState }, vault){
+            commit("setActiveVault", vault)
+            dispatch("getVaultKeeps", vault.id)
+            router.push({ name: 'Vault', params: {id: vault.id}})
+        },
+        deleteVault({ commit, dispatch }, vault){
+            server.delete('/vault/' +vault.id)
+            .then(res =>{
+                commit("removeVault", res.data)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        },
+        search({ dispatch, commit}, query){
+            server.get('/keep/query/' +query)
+            .then(res =>{
+                commit("setKeeps", res.data)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        },
         deleteFavorite({ commit, dispatch }, id) {
             server.delete('/favorites/' + id)
                 .then(res => {
