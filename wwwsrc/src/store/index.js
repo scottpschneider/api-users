@@ -41,7 +41,6 @@ export default new vuex.Store({
             state.user = {}
         },
         setUser(state, user) {
-            debugger
             state.user = user
         },
         setKeeps(state, keeps) {

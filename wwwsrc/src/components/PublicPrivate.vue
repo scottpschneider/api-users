@@ -4,7 +4,7 @@
       <img class="card-img-top" :src="keep.img">
       <div class="buttons">
         <button v-if="viewable" class="btn btn-success" @click="selectKeep(keep)">view</button>
-        <button type="button" v-if="user.id" class="btn btn-primary" data-toggle="modal" data-target="#keepModal" @click="activeKeep(keep)">keep</button>
+        <button type="button" v-if="user.id" class="btn btn-primary" @click="activeKeep(keep)">keep</button>
         <button v-if="user.id == keep.authorId && !keep.public" class="btn btn-warning" @click="makePublic(keep)">public</button>
         <button v-if="user.id == keep.authorId && keep.public" class="btn btn-warning" @click="makePublic(keep)">private</button> 
         <button v-if="activeVault.id && deletable" class="btn btn-danger" @click="deleteShare(keep)">Delete</button>

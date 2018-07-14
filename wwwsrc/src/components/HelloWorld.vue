@@ -10,8 +10,15 @@
         </div>
          <div class="">
     <div>
+      <form @submit.prevent="createVault">
+      <input type="text" v-model="vault.name" placeholder="vaultname">
+      <input type="text" v-model="vault.body" placeholder="body">
+      <button type="submit" class="btn btn-primary">Create Vault</button>
+        </form>
       <button class="btn btn-primary" @click="toggle">Vaults</button>
       <button class="btn btn-primary" @click="toggle">Keeps</button>
+    </div>
+
     </div>
     <div v-if="bool">
       <vaults></vaults>
@@ -38,7 +45,7 @@
         </div>
         <button class="button" v-if="user._id" @click="logout">Log Out</button>
       </div>
-      </div>
+      
   
 </template>
 
@@ -53,7 +60,11 @@ export default {
     return {
       msg: "Welcome to Your KEEPR App",
     query: '',
-    bool:true
+    bool:true,
+    vault:{
+      name: '',
+      body: ''
+    }
     };
   },
   components: {
@@ -74,6 +85,9 @@ export default {
       router.push({
         name: "SearchResults"
       });
+    },
+    createVault(){
+      this.$store.dispatch("createVault", vault)
     },
     getSearchResults() {
         this.$store.dispatch('getSearchResults', this.query)

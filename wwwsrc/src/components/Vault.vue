@@ -5,6 +5,7 @@
         <h2>{{vault.title}}</h2>
       </div>
     </div>
+    
     <div class="keeps row">
       <div v-for="keep in keeps" class="col-4" :key="keep.id">
         <public-private :keep="keep" :viewable="true"></public-private>
