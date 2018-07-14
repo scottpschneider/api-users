@@ -79,7 +79,7 @@ export default new vuex.Store({
         //     })
         // },
         getSearchResults({dispatch, commit}, query) {
-            k eepSearch.get(query + '&number=6')
+            keepSearch.get(query + '&number=6')
             .then(res=>{
                 var keeps = res.data.results.map(keep => {
                     return {
