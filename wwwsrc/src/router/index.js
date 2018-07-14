@@ -7,12 +7,11 @@ import SearchResults from '@/components/SearchResults'
 import ProfilePage from '@/components/ProfilePage'
 import Auth from '@/components/Auth'
 import Favorites from '@/components/Favorites'
-//import GeneralSearchResults from '@components/Gen'
+import Vault from '@/components/Vault'
+import Keep from '@/components/Keep'
 
 
 Vue.use(Router)
-
-// var api <-- Guys, what is this?
 
 export default new Router({
   routes: [
@@ -31,11 +30,6 @@ export default new Router({
     name: 'ProfilePage',
     component: ProfilePage
     },
-    // {
-    //   path: '/GeneralSearchResults',
-    //   name: 'GeneralSearchResults',
-    //   component: GeneralSearchResults
-    // },
     {
       path: '/Auth',
       name: 'Auth',
@@ -46,6 +40,15 @@ export default new Router({
       name:'Favorites',
       component: Favorites
     },
-    
+    {
+      path: '/vault/:id',
+      name: 'Vault',
+      component: Vault
+    },
+    {
+      path: '/keep/:keepId',
+      name: 'Keep',
+      component: Keep
+    },
   ]
 })

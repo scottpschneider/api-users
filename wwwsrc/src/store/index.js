@@ -1,7 +1,7 @@
 import vue from 'vue'
 import vuex from 'vuex'
 import axios from 'axios'
-import router from "../router"
+import router from '../router'
 
 vue.use(vuex)
 
@@ -46,6 +46,21 @@ export default new vuex.Store({
         setKeeps(state, keeps) {
             console.log(keeps)
             state.keeps = keeps
+        },
+        setUserKeeps(state, keeps) {
+            state.UserKeeps = keeps
+        },
+        setNewKeep(state, keep) {
+            state.userKeeps.unshift(keep)
+        },
+        setTags(state, tags) {
+            state.tags = tags
+        },
+        removeKeep(state, id){
+            var i =state.userKeeps.findIndex(keep =>{
+                return keep.id=id
+            })
+            state.userKeeps.splice(i, 1)
         },
         setVault(state, vault) {
             state.vault = vault
