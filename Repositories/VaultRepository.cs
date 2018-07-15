@@ -22,14 +22,11 @@ namespace API_Users.Repositories
       newVault.Id = id;
       return newVault;
     }
-   
-    // GetbyAuthor
-    public IEnumerable<Vault> GetbyAuthorId(int id)
-    {
-      return _db.Query<Vault>("SELECT * FROM vaults WHERE authorId = @id;", new { id });
-    }
-    // GetbyId
-    public Vault GetbyVaultId(int id)
+
+        // GetbyAuthor
+        public IEnumerable<Vault> GetbyAuthorId(int id) => _db.Query<Vault>("SELECT * FROM vaults WHERE AuthorId = @id;", new { id });
+        // GetbyId
+        public Vault GetbyVaultId(int id)
     {
       return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vaults WHERE id = @id;", new { id });
     }

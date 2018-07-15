@@ -180,32 +180,6 @@ export default new vuex.Store({
                 console.log(err)
             })
         },
-        getTags({ commit, dispatch }, keepId){
-            server.get('/keep/tags/' +keepId)
-            .then(res =>{
-                commit("setTags", res.data)
-                dispatch("getRelated", res.data)
-            })
-            .catch(err =>{
-                console.log(err)
-            })
-        },
-
-        getSearchResults({dispatch, commit}, query) {
-            keepSearch.get(query)
-            .then(res=>{
-                var keeps = res.data.results.map(keep => {
-                    return {
-                        name: keep.name,
-                        description: keep.description,
-                        userId: user.id
-                    }
-                })
-                console.log(res)
-                commit('setKeeps', keeps)
-                router.push({name: 'SearchResults'})
-            })
-        },
 
         authenticate({ commit, dispatch }) {
             server.get('/account/authenticate')
@@ -265,7 +239,7 @@ export default new vuex.Store({
             })
         },
         getVaults({ commit, dispatch, state }){
-            server.get('/vault/author/' + state.user.id)
+            server.get('api/vault/author/' + state.user.id)
             .then(res =>{
                 commit("setVaults", res.data)
             })

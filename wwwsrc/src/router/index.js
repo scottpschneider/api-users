@@ -3,7 +3,6 @@ import vuex from 'vuex'
 import axios from 'axios'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import SearchResults from '@/components/SearchResults'
 import ProfilePage from '@/components/ProfilePage'
 import Auth from '@/components/Auth'
 import Favorites from '@/components/Favorites'
@@ -21,14 +20,9 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path: '/SearchResults',
-      name: 'SearchResults',
-      component: SearchResults
-    },
-    {
-    path: '/ProfilePage',
-    name: 'ProfilePage',
-    component: ProfilePage
+      path: '/ProfilePage',
+      name: 'ProfilePage',
+      component: ProfilePage
     },
     {
       path: '/Auth',
@@ -37,7 +31,7 @@ export default new Router({
     },
     {
       path: '/Favorites',
-      name:'Favorites',
+      name: 'Favorites',
       component: Favorites
     },
     {

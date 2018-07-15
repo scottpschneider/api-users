@@ -3,10 +3,16 @@
     <div class="row d-flex justify-content-center">
       
       </div>
+       <div class="form-inline my-2 my-lg-0" v-if="!user._id">
+          <router-link class="nav-link" data-toggle="collapse" data-target=".navbar-collapse" :to="{name: 'Auth'}">login/register</router-link>
+        </div>
+        <div class="user form-inline my-2 my-lg-0" v-else>{{user.userName}}
+        </div>
+        <button class="button" v-if="user._id" @click="logout">Log Out</button>
             <div class="row -flex justify-content-center">
       <div class="HelloWorld">
         <div class="desc container-fluid">
-          <h1>"Keepr, keep in your vault</h1>
+          <h1>"Keepr, keep in your vault {{user.userName}}</h1>
         </div>
          <div class="">
     <div>
@@ -15,7 +21,8 @@
       <input type="text" v-model="vault.body" placeholder="body">
       <button type="submit" class="btn btn-primary">Create Vault</button>
         </form>
-      <button class="btn btn-primary" @click="toggle">Vaults</button>
+        
+      <button class="btn btn-primary" @click="getVaults">Vaults</button>
       <button class="btn btn-primary" @click="toggle">Keeps</button>
     </div>
 
@@ -27,30 +34,15 @@
       <keeps></keeps>
     </div>
   </div>
-        <div class="search container">
-          <h3 class="search">What's Posted Today?</h3>
-          <!-- <router-link :to="{name:'SearchResults'}"> -->
-            <form @submit.prevent="getSearchResults" class="form-inline my-2 my-lg-0">
-          <input class="input" type="text" v-model="query" placeholder="search any">
-          <button class="button" data-toggle="collapse" data-target=".navbar-collapse" @click="getSearchResults">Search Posts</button>
-        </form>
-          <!-- </router-link> -->
-        </div>
-
+        
       </div>
-       <div class="form-inline my-2 my-lg-0" v-if="!user._id">
-          <router-link class="nav-link" data-toggle="collapse" data-target=".navbar-collapse" :to="{name: 'Auth'}">login/register</router-link>
-        </div>
-        <div class="user form-inline my-2 my-lg-0" v-else>{{user.userName}}
-        </div>
-        <button class="button" v-if="user._id" @click="logout">Log Out</button>
+
       </div>
       
   
 </template>
 
 <script>
-import SearchResults from "./SearchResults.vue";
 import Vaults from "./Vaults";
 import Keeps from "./Keeps";
 
@@ -67,8 +59,7 @@ export default {
     }
     };
   },
-  components: {
-    SearchResults, 
+  components: { 
     Vaults,
     Keeps
   },
@@ -81,17 +72,9 @@ export default {
     toggle(){
       this.bool=!this.bool
     },
-    goToSearchField() {
-      router.push({
-        name: "SearchResults"
-      });
-    },
     createVault(){
       this.$store.dispatch("createVault", this.vault)
     },
-    getSearchResults() {
-        this.$store.dispatch('getSearchResults', this.query)
-      },
   }
 };
 </script>

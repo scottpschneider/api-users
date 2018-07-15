@@ -38,6 +38,6 @@ export default {
   margin-top: 10px;
 }
 img {
-  height: 10px;
+  height: 100px;
 }
 </style>
