@@ -6,7 +6,7 @@ import router from '../router'
 vue.use(vuex)
 
 var production = !window.location.host.includes('localhost');
-var baseUrl = production ? '//keeprweb-api.herokuapp.com/' : '//localhost:5000';
+var baseUrl = production ? '//keeprweb-api.herokuapp.com' : '//localhost:5000';
 
 var keepSearch = axios.create({
     headers: {
@@ -17,7 +17,7 @@ var keepSearch = axios.create({
 })
 
 var auth = axios.create({
-    baseURL: baseUrl + "/account",
+    baseURL: baseUrl + "account/",
     timeout: 3000,
     withCredentials: true
 })
@@ -320,10 +320,11 @@ export default new vuex.Store({
                 })
         },
         register({ commit, dispatch }, userData) {
-            auth.post('/register', userData)
-                .then(res => {
-                    console.log("Registration Successful")
-                    router.push({ name: 'HelloWorld' }) // I changed this to just change the component 
+            auth.post('register', userData)
+            .then(res => {
+                console.log("Registration Successful")
+                commit('setUser', res.data)
+                router.push({ name: 'HelloWorld' }) // I changed this to just change the component 
                 })
         },
         // authenticate({ commit, dispatch }) {

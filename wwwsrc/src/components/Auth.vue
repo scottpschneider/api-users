@@ -12,7 +12,7 @@
       <p @click="regLog">No username? Register here</p>
     </div>
 
-   <div v-else>  
+   <!-- <div v-else>   -->
      <form @submit.prevent="userRegister" >
        <input type="text" placeholder="Email" v-model="newUser.email">
        <input type="text" placeholder="userName" v-model="newUser.userName">
@@ -20,7 +20,7 @@
        <button type="submit">Register</button>
       </form>
       <p @click="regLog">Currently a user? Straight to Login!</p>
-   </div>
+   <!-- </div> -->
 </div>
   </div>
 </template>
@@ -28,9 +28,7 @@
 <script>
 export default {
   name: "auth",
-  mounted() {
-    this.$store.dispatch("authenticate");
-  },
+ 
   data() {
     return {
       logister: false,
@@ -52,11 +50,12 @@ export default {
   },
   methods: {
     login() {
-      this.$store.dispatch("login", this.log);
+      this.$store.dispatch('login', this.log);
     },
     userRegister() {
-      this.$store.dispatch("register", this.newUser);
-      this.$store.dispatch("login", this.newUser);
+      console.log(this.newUser)
+      this.$store.dispatch('register', this.newUser);
+      this.$store.dispatch('login', this.newUser);
     },
     regLog() {
       //toggle between register and login
