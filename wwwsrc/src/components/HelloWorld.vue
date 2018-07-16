@@ -53,7 +53,7 @@ import Keeps from "./Keeps";
 export default {
   name: "HelloWorld",
   mounted() {
-    this.$store.dispatch("authenticate");
+    this.$store.dispatch("authenticate")
   },
   data() {
     return {

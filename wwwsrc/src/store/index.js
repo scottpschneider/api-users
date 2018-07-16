@@ -17,7 +17,7 @@ var keepSearch = axios.create({
 })
 
 var auth = axios.create({
-    baseURL: baseUrl + "account/",
+    baseURL: baseUrl + "/account/",
     timeout: 3000,
     withCredentials: true
 })
