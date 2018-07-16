@@ -17,12 +17,10 @@
 </template>
 
 <script>
-import publicPrivate from "./PublicPrivate";
 
 export default {
   name: 'Keep',
   components: {
-    publicPrivate
   },
   mounted() {
     this.$store.dispatch("getTags", this.keep.id);

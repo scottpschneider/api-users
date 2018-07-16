@@ -25,6 +25,7 @@
 --     description VARCHAR(255) NOT NULL,
 --     userId VARCHAR(255),
 --     INDEX userId (userId),
+--     PublicPrivate tinyint(1),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)
 --         ON DELETE CASCADE,  

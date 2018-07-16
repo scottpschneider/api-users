@@ -3,7 +3,6 @@ import vuex from 'vuex'
 import axios from 'axios'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import ProfilePage from '@/components/ProfilePage'
 import Auth from '@/components/Auth'
 import Favorites from '@/components/Favorites'
 import Vault from '@/components/Vault'
@@ -18,11 +17,6 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
-    },
-    {
-      path: '/ProfilePage',
-      name: 'ProfilePage',
-      component: ProfilePage
     },
     {
       path: '/Auth',

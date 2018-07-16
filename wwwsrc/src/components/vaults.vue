@@ -1,14 +1,10 @@
 <template>
   <div class="container-fluid">
-    <div>
-     
-    </div>
-    
     <div class="vaults row">
       <div class="col-4" v-for="vault in vaults" :key="vault.id">
-        <div class="card text-center">
+        <div class="text-center">
           <a @click="selectVault(vault)">
-            <h2 class="card-title">{{vault.title}}</h2>
+            <p>{{vault.name}}</p>
           </a>
           <div>
             <button class="btn btn-danger" @click="deleteVault(vault)">Delete</button>
@@ -21,42 +17,30 @@
 </template>
 
 <script>
-  export default {
-    name: 'Vaults',
-    mounted(){
-        //this.$store.dispatch("getVaults")
+export default {
+  name: "Vaults",
+  mounted() {},
+  data() {
+    return {};
+  },
+  computed: {
+    vaults() {
+      return this.$store.state.vaults;
     },
-    data() {
-      return {
-        newVault:{
-          title: ''
-        }
-      }
+    user() {
+      return this.$store.state.user;
+    }
+  },
+  methods: {
+    selectVault(vault) {
+      this.$store.dispatch("selectVault", vault);
     },
-    computed: {
-      vaults(){
-        return this.$store.state.vaults
-      },
-      user() {
-        return this.$store.state.user
-      }
-    },
-    methods: {
-      createVault(){
-        this.$store.dispatch("createVault", this.newVault)
-      }, 
-      selectVault(vault){
-        this.$store.dispatch("selectVault", vault)
-      },
-      deleteVault(vault){
-        this.$store.dispatch("deleteVault", vault)
-      }
+    deleteVault(vault) {
+      this.$store.dispatch("deleteVault", vault);
     }
   }
-
+};
 </script>
 
 <style>
-
-
 </style>

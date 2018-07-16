@@ -1,109 +1,41 @@
 <template>
   <div class="container-fluid">
-      <div>
-          <button type= "button" class= "btn btn-primary btn-md" data-toggle="modal" data-target="#createKeepModal">Make New Keep</button>
-
-        <div class="modal fade" id="createKeepModal" tabindex="-1" role="dialog" aria-labelledby="createKeepModalTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class ="modal-title" id="exampleModalLongTitle">Make New Keep</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class ="modal-body">
-                        <form v-on:submit.prevent="createKeep">
-                            <input type="url" placeholder="Image Url" v-model="newKeep.img">
-                            <input class="input" type="text" name="description" placeholder="Description" id="description" v-model="newKeep.description">
-                            
-                        </form>
-                        <p id="error"></p>
-                    </div>
-                    <div class="modal-footer">
-                        <select v-model="vault">
-                            <option disabled value=''>Select Vault</option>
-                            <option v-for="vault in vaults" :key="vault.id" :vaulue="vault">{{vault.title}}</option>
-                        </select>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button v-if="vault.title" class="btn btn-primary btn-primary" @click="createKeep" data-dismiss="modal">Submit</button>
-                    </div>
-                </div>
-            </div>
-            </div>      
-      </div>
     <div class="keeps row">
         <div v-for="keep in keeps" class="col-4" :key="keep.id">
-            <PublicPrivate :keep="keep" :viewable="true"></PublicPrivate>
+            {{keep.name}}
         </div>
     </div>
   </div>
 </template>
 
 <script>
-import publicPrivate from "./PublicPrivate.vue";
-
 export default {
   name: "Keeps",
-  components: {
-    publicPrivate
-  },
   mounted() {
-    this.$store.dispatch("getUserKeeps");
+    this.$store.dispatch("getKeeps");
   },
   data() {
-    return {
-      tags: [],
-      tag: {
-        tagName: ""
-      },
-      newKeep: {
-        img: "",
-        description: ""
-      },
-      vault: {}
-    };
+    return {};
   },
   computed: {
     keeps() {
-      return this.$store.state.keepsModule.userKeeps;
+      return this.$store.state.keeps;
     },
     vaults() {
-      return this.$store.state.vaultModule.vaults;
+      return this.$store.state.vaults;
     }
   },
   methods: {
-    addTag() {
-      var newTag = {
-        tagName: this.tag.tagName
-      };
-      this.tags.push(newTag);
-      this.tag.tagName = "";
-    },
     createKeep() {
-      if (!this.vault.id) {
-        this.error("Please select a vault");
-      }
-      this.newKeep.vaultId = this.vault.id;
-      this.newKeep.tags = this.tags;
-      this.$store.dispatch("createKeep", this.newKeep);
-    },
-    removeTag(i) {
-      this.tags.splice(i, 1);
-    },
-    error(str) {
-      document.getElementById("error").innerText = str;
-      setTimeout(() => {
-        document.getElementById("error").innerText = "";
-      }, 5000);
+      // this.$store.dispatch("createKeep", this.newKeep);
     }
   }
 };
 </script>
 
 <style>
-.remove-tag{
-    color: red;
-    cursor: pointer;
+.remove-tag {
+  color: red;
+  cursor: pointer;
 }
 </style>

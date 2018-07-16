@@ -2,35 +2,35 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <h2>{{vault.title}}</h2>
+        <h2>{{vault.name}}</h2>
       </div>
     </div>
     
     <div class="keeps row">
       <div v-for="keep in keeps" class="col-4" :key="keep.id">
-        <public-private :keep="keep" :viewable="true"></public-private>
+        {{keep.name}}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import publicPrivate from './PublicPrivate'
 
 export default {
   name: "Vault",
-  components: {
-    publicPrivate
-  },
+  components: {},
   data() {
     return {};
   },
+  mounted(){
+    //fire off requst to get vault keeps
+  },
   computed: {
     vault(){
-      return this.$store.state.vaultModule.activeVault;
+      return this.$store.state.activeVault;
     },
     keeps(){
-      return this.$store.state.keepsModule.userKeeps;
+      return this.$store.state.vaultKeeps;
     }
   },
   methods: {}

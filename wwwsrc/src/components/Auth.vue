@@ -28,7 +28,7 @@
 <script>
 export default {
   name: "auth",
- 
+
   data() {
     return {
       logister: false,
@@ -41,7 +41,7 @@ export default {
         email: "",
         password: ""
       }
-    }
+    };
   },
   computed: {
     currentUser() {
@@ -50,19 +50,19 @@ export default {
   },
   methods: {
     login() {
-      this.$store.dispatch('login', this.log);
+      this.$store.dispatch("login", this.log);
     },
     userRegister() {
-      console.log(this.newUser)
-      this.$store.dispatch('register', this.newUser);
-      this.$store.dispatch('login', this.newUser);
+      console.log(this.newUser);
+      this.$store.dispatch("register", this.newUser);
     },
     regLog() {
+      // this.$store.dispatch("login", this.newUser);
       //toggle between register and login
       this.logister = !this.logister;
     }
   }
-}
+};
 </script>
 
 <style>

@@ -6,15 +6,7 @@ import router from '../router'
 vue.use(vuex)
 
 var production = !window.location.host.includes('localhost');
-var baseUrl = production ? '//keeprweb-api.herokuapp.com' : '//localhost:5000';
-
-var keepSearch = axios.create({
-    headers: {
-        "X-Mashape-Key" : "WUU1lLesMimshTMLlxjAtkQGQMk6p1JQPB5jsnLPJCHfNJbugE"
-    },
-    baseURL: '//keeprweb-api.herokuapp.com' + '/search?query=',
-    timeout: 3000
-})
+var baseUrl = production ? '' : '//localhost:5000';
 
 var auth = axios.create({
     baseURL: baseUrl + "/account/",
@@ -23,7 +15,7 @@ var auth = axios.create({
 })
 
 var server = axios.create({
-    baseURL: baseUrl,
+    baseURL: baseUrl + '/api',
     timeout: 3000,
     withCredentials: true
 })
@@ -31,10 +23,11 @@ var server = axios.create({
 export default new vuex.Store({
     state: {
         user: {},
-        keeps: {},
+        keeps: [],
+        activeKeep: {},
+        userKeeps: [],
         vaults: [],
-        favorites: [],
-
+        favorites: []
     },
     mutations: {
         deleteUser(state) {
@@ -44,7 +37,6 @@ export default new vuex.Store({
             state.user = user
         },
         setKeeps(state, keeps) {
-            console.log(keeps)
             state.keeps = keeps
         },
         setUserKeeps(state, keeps) {
@@ -53,32 +45,26 @@ export default new vuex.Store({
         setNewKeep(state, keep) {
             state.userKeeps.unshift(keep)
         },
-        setTags(state, tags) {
-            state.tags = tags
-        },
-        removeKeep(state, id){
-            var i =state.userKeeps.findIndex(keep =>{
-                return keep.id=id
+        removeKeep(state, id) {
+            var i = state.userKeeps.findIndex(keep => {
+                return keep.id = id
             })
             state.userKeeps.splice(i, 1)
         },
-        setKeep(state,keep){
-            state.keep=keep
+        setActiveKeep(state, keep) {
+            state.activeKeep = keep
         },
-        setActiveKeep(state,keep){
-            state.activeKeep=keep
+        setVaults(state, vaults) {
+            state.vaults = vaults
         },
-        setVaults(state, vault) {
-            state.vault = vault
-        },
-        setNewVault(state, vault){
+        setNewVault(state, vault) {
             state.vaults.unshift(vault)
         },
-        setActiveVault(state, vault){
-            state.activeVault = Vault
+        setActiveVault(state, vault) {
+            state.activeVault = vault
         },
-        removeVault(state, vault){
-            var i = state.vaults.findIndex(v =>{
+        removeVault(state, vault) {
+            var i = state.vaults.findIndex(v => {
                 return v.id == vault.id
             })
             state.vaults.splice(i, 1)
@@ -86,219 +72,118 @@ export default new vuex.Store({
         setVaultKeeps(state, vaultkeeps) {
             state.vaultkeeps = vaultkeeps
         },
-
-        setFavorites(state, favorites) {
-            console.log(favorites)
-            state.favorites = favorites
-        },
-
     },
-
     actions: {
-
-        getKeeps({ commit,dispatch }){
+        getKeeps({ commit, dispatch }) {
             server.get('/keep')
-            .then(res =>{
-                commit("setKeeps", res,data)
-            })
-            .catch(err =>{
-                console.log(err)
-            })
-        },
-        getVaultKeeps({ commit,dispatch }, id){
-            server.get('/keep/vault/'+id)
-            .then(res =>{
-                commit("setUserKeeps", res.data)
-            })
-            .catch(err=>{
-                console.log(err)
-            })
-        },
-        getUserKeeps({ commit,dispatch,rootState }){
-            server.get('/keep/user/'+ rootState.userModule.user.id)
-            .then(res =>{
-                commit("setUserKeeps", res.data)
-            })
-            .catch(err=>{
-                console.log(err)
-            })
-        },
-        createKeep({ commit, dispatch, rootState}, keep){
-            keep.author = rootState.userModule.user.username
-            server.post('/keep/' +keep.vaultId, keep)
-            .then(res=>{
-                commit("setNewKeep", res.data)
-                server.post('/keep/tag/'+res.data.id, keep.tags)
-                .then(res=>{
-                    commit("setTags", res.data)
+                .then(res => {
+                    commit("setKeeps", res.data)
                 })
-                .catch(err =>{
+                .catch(err => {
                     console.log(err)
                 })
-            })
-            .catch(err =>{
-                console.log(err)
-            })
         },
-        deleteShare({ commit,dispatch }, share){
-             server.delete('/keep/share/' +share.vaultId+ '/' +share.id)
-             .then(res =>{
-                 commit("removeKeep", share.id)
-             })
-             .catch(err =>{
-                 console.log(err)
-             })
+        getVaultKeeps({ commit, dispatch }, id) {
+            server.get('/keep/vault/' + id)
+                .then(res => {
+                    commit("setUserKeeps", res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         },
-        activeKeep({ diapatch,commit }, keep){
+        getUserKeeps({ commit, state }) {
+            server.get('/keep/user/' + state.user.id)
+                .then(res => {
+                    commit("setUserKeeps", res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        },
+        createKeep({ commit, state }, keep) {
+            keep.author = state.user.username
+            server.post('/keep/' + keep.vaultId, keep)
+                .then(res => {
+                    commit("setNewKeep", res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        },
+        activeKeep({ commit }, keep) {
             commit("setActiveKeep", keep)
         },
-        editKeep({ commit, dispatch }, keep){
-            server.put('/keep/' +keep.id, keep)
-            .then(res =>{
-                commit("setKeep", res.data)
-            })
-            .catch(err =>{
-                console.log(err)
-            })
-        },
-        selectKeep({ commit,dispatch }, keep){
-            server.get('/keep/' +keep.id)
-            .then(res =>{
-                commit("setKeep", res.data)
-                router.push({name: "Keep", params: {keepId: res.data.id}})
-            })
-            .catch(err =>{
-                console.log(err)
-            })
-        },
-        addShare({ commit, dispatch }, share){
-            server.post("/keep/add/" +share.keepId, share)
-            .then(res=>{
-                console.log(res.data)
-            })
-            .catch(err =>{
-                console.log(err)
-            })
-        },
-
-        authenticate({ commit, dispatch }) {
-            server.get('/account/authenticate')
-            .then(res => {
-                    commit('setUser', res.data)
-                    dispatch("getVaults")
-                    // router.push({ name: 'HelloWorld' })
+        editKeep({ commit }, keep) {
+            server.put('/keep/' + keep.id, keep)
+                .then(res => {
+                    commit("setKeep", res.data)
                 })
-                .catch(res => {
+                .catch(err => {
+                    console.log(err)
+                })
+        },
+        selectKeep({ commit }, keep) {
+            server.get('/keep/' + keep.id)
+                .then(res => {
+                    commit("setKeep", res.data)
+                    router.push({ name: "Keep", params: { keepId: res.data.id } })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        },
+        addShare({ commit, dispatch }, share) {
+            server.post("/keep/add/" + share.keepId, share)
+                .then(res => {
                     console.log(res.data)
                 })
-        },
-
-        postKeep({ commit, dispatch }, keepItem) {
-            server.post('/api/keepLists', keepItem)
-                .then(res => {
-                    dispatch("getKeeps")
-                })
-                .catch(res => {
-                    alert("err")
+                .catch(err => {
+                    console.log(err)
                 })
         },
-        addToFavorites({ commit, dispatch, state }, keep) {
-            server.post('/keeps', recipe)
-                .then(res => {
-                    commit('setKeeps', res.data)
-                })
-        },
-        getFavorites({ commit, dispatch, state }) {
-            server.get('/keeps')
-                .then(res => {
-                    console.log(res)
-                    commit('setFavorites', res.data.favorites)
-                })
-        },
-        addToVault({ commit, dispatch, state }, VaultItems) {
+        addToVault({ commit, dispatch, state }, vaultItems) {
             server.put('/server/vaultLists/' + state.activeVaultList._id, vaultItems)
                 .then(res => {
                     commit('setVaultList', res.data)
                 })
         },
-        addVaultList({ commit, dispatch, state }, newTitle) {
-            var newList = {
-                title: newTitle,
-                userId: state.user._id
-            }
-            server.post('/api/vaultLists/', newList)
+        getVaults({ commit, dispatch, state }) {
+            server.get('vault/author/' + state.user.id)
                 .then(res => {
-                    console.log(res)
-                    commit('setVaultList', res.data.items)
+                    commit("setVaults", res.data)
+                })
+                .catch(err => {
+                    console.log(err)
                 })
         },
-        getRelated({ dispatch, commit}, tags){
-            server.post('/keep/query', tags)
-            .then(res =>{
-                commit("setKeeps", res.data)
-            })
-        },
-        getVaults({ commit, dispatch, state }){
-            server.get('api/vault/author/' + state.user.id)
-            .then(res =>{
-                commit("setVaults", res.data)
-            })
-            .catch(err=>{
-                console.log(err)
-            })
-        },
-        getVaultList({ commit, dispatch, state }) {
-            server.get('/api/vaultLists/' + state.user._id)
+        createVault({ commit, dispatch }, vault) {
+            server.post('vault', vault)
                 .then(res => {
-                    console.log(res)
-                    commit('setVaultList', res.data)
+                    commit("setNewVault", res.data)
+                })
+                .catch(err => {
+                    console.log(err)
                 })
         },
-        createVault({ commit, dispatch }, vault){
-            server.post('/api/vault', vault)
-            .then(res =>{
-                commit("setNewVault", res.data)
-            })
-            .catch(err =>{
-                console.log(err)
-            })
-        },
-        setActiveVaultList({ commit, dispatch }, vaultList) {
-            commit('setActiveVaultList', vaultList)
-        },
-        selectVault({ commit, dispatch, rootState }, vault){
+        selectVault({ commit, dispatch, rootState }, vault) {
             commit("setActiveVault", vault)
             dispatch("getVaultKeeps", vault.id)
-            router.push({ name: 'Vault', params: {id: vault.id}})
+            router.push({ name: 'Vault', params: { id: vault.id } })
         },
-        deleteVault({ commit, dispatch }, vault){
-            server.delete('/vault/' +vault.id)
-            .then(res =>{
-                commit("removeVault", res.data)
-            })
-            .catch(err =>{
-                console.log(err)
-            })
-        },
-        search({ dispatch, commit}, query){
-            server.get('/keep/query/' +query)
-            .then(res =>{
-                commit("setKeeps", res.data)
-            })
-            .catch(err=>{
-                console.log(err)
-            })
-        },
-        deleteFavorite({ commit, dispatch }, id) {
-            server.delete('/favorites/' + id)
+        deleteVault({ commit, dispatch }, vault) {
+            server.delete('/vault/' + vault.id)
                 .then(res => {
-                    dispatch('getFavorites')
+                    commit("removeVault", res.data)
+                })
+                .catch(err => {
+                    console.log(err)
                 })
         },
         deleteKeep({ commit, dispatch }, id) {
-            server.delete('/api/keepLists/' + id)
+            server.delete('keep/' + id)
                 .then(res => {
-                    dispatch('getGroceryList')
+                    dispatch('getUserKeeps')
                 })
         },
 
@@ -316,27 +201,28 @@ export default new vuex.Store({
                 .then(res => {
                     console.log("Successfully logged out!")
                     commit('deleteUser')
-                    //   router.push({name: 'Login'})
+                    router.push({ name: 'Login' })
                 })
         },
         register({ commit, dispatch }, userData) {
             auth.post('register', userData)
-            .then(res => {
-                console.log("Registration Successful")
-                commit('setUser', res.data)
-                router.push({ name: 'HelloWorld' }) // I changed this to just change the component 
+                .then(res => {
+                    console.log("Registration Successful")
+                    commit('setUser', res.data)
+                    router.push({ name: 'HelloWorld' }) // I changed this to just change the component 
                 })
         },
-        // authenticate({ commit, dispatch }) {
-        //     server.get('/authenticate')
-        //         .then(res => {
-        //             commit('setUser', res.data)
-        //             // router.push({ name: 'HelloWorld' })
-        //         })
-        //         .catch(res => {
-        //             console.log(res.data)
-        //         })
-
+        authenticate({ commit, dispatch }) {
+            auth.get('authenticate')
+                .then(res => {
+                    commit('setUser', res.data)
+                    dispatch("getVaults")
+                    router.push({ name: 'HelloWorld' })
+                })
+                .catch(res => {
+                    console.log("auth error", res.data)
+                })
+        }
     }
 })
 
