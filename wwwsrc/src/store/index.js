@@ -166,7 +166,7 @@ export default new vuex.Store({
                     console.log(err)
                 })
         },
-        selectVault({ commit, dispatch, rootState }, vault) {
+        selectVault({ commit, dispatch }, vault) {
             commit("setActiveVault", vault)
             dispatch("getVaultKeeps", vault.id)
             router.push({ name: 'Vault', params: { id: vault.id } })

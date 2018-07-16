@@ -24,6 +24,7 @@ export default {
   },
   mounted(){
     //fire off requst to get vault keeps
+    //this.$store.dispatch({"getVaultKeeps": dispatch}, id);
   },
   computed: {
     vault(){
