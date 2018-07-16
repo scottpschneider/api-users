@@ -1,7 +1,8 @@
 <template>
 <div class="container-fluid" id="background">
     <div class="row d-flex justify-content-center">
-     <img class="logo1 animateBar1 animated rollIn" src="robot-vacuum.jpg" alt="">  
+     <img class="logo1 animateBar1 animated rollIn" src="robot-vacuum.jpg" alt=""> 
+     <h1>Keepr</h1> 
       </div>
        <div class="form-inline my-2 my-lg-0" v-if="!user._id">
           <router-link class="nav-link" data-toggle="collapse" data-target=".navbar-collapse" :to="{name: 'Auth'}">login/register</router-link>
@@ -12,7 +13,8 @@
             <div class="row -flex justify-content-center">
       <div class="HelloWorld">
         <div class="desc container-fluid">
-          <h1>"Keepr, keep in your vault {{user.userName}}</h1>
+          <h3>Submit fav URLs {{user.userName}}</h3>
+          <h4>Share/Keep in your own vault</h4>
         </div>
          <div class="container">
     <div>
