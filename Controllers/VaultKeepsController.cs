@@ -34,7 +34,7 @@ namespace API_Users.Controllers
     }
     //get vaultkeep by id
     [HttpGet("{id}")]
-    public VaultKeeps GetById(int id)
+    public VaultKeeps GetbyVaultKeepsId(int id)
     {
       return _db.GetbyVaultKeepsId(id);
     }
