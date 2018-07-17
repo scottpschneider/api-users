@@ -12,7 +12,7 @@
       <p @click="regLog">No username? Register here</p>
     </div>
 
-   <!-- <div v-else>   -->
+   <div v-else>  
      <form @submit.prevent="userRegister" >
        <input type="text" placeholder="Email" v-model="newUser.email">
        <input type="text" placeholder="userName" v-model="newUser.userName">
@@ -20,7 +20,7 @@
        <button type="submit">Register</button>
       </form>
       <p @click="regLog">Currently a user? Straight to Login!</p>
-   <!-- </div> -->
+   </div>
 </div>
   </div>
 </template>
