@@ -23,6 +23,12 @@
         <button type="submit" class="btn btn-primary">Create Vault</button>
       </form>
 
+      <form @submit.prevent="createKeep">
+        <input type="text" v-model="keep.name" placeholder="keepname">
+        <input type="text" v-model="keep.body" placeholder="URL">
+        <button type="submit" class="btn btn-primary">Create Keep</button>
+      </form>
+
         <!-- <form @submit.prevent="getVaults">
       <button class="btn btn-primary" @click="getVaults">All Vaults</button>
       
@@ -59,6 +65,10 @@ export default {
       vault: {
         name: "",
         body: ""
+      }, 
+      keep: {
+        name:"",
+        body:""
       }
     };
   },
@@ -75,6 +85,9 @@ export default {
     }
   },
   methods: {
+    createKeep(){
+      this.$store.dispatch("createKeep", this.keep);
+    },
     createVault() {
       this.$store.dispatch("createVault", this.vault);
     },
