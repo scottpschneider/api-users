@@ -16,7 +16,7 @@ namespace API_Users.Repositories
     {
       int id = _db.ExecuteScalar<int>(@"
                 INSERT INTO keeps (name, description, userId)
-                VALUES (@Name, @Body, @AuthorId);
+                VALUES (@Name, @Description, @userId);
                 SELECT LAST_INSERT_ID();
             ", newKeep);
       newKeep.Id = id;
@@ -28,9 +28,9 @@ namespace API_Users.Repositories
       return _db.Query<Keep>("SELECT * FROM keeps;");
     }
     // GetbyAuthor
-    public IEnumerable<Keep> GetbyAuthorId(int id)
+    public IEnumerable<Keep> GetbyuserId(int id)
     {
-      return _db.Query<Keep>("SELECT * FROM keeps WHERE authorId = @id;", new { id });
+      return _db.Query<Keep>("SELECT * FROM keeps WHERE userId = @id;", new { id });
     }
     // GetbyId
     public Keep GetbyKeepId(int id)

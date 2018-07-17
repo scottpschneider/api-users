@@ -16,7 +16,7 @@
         </div>
          <div class="container">
     <div>
-
+      
       <form @submit.prevent="createVault">
         <input type="text" v-model="vault.name" placeholder="vaultname">
         <input type="text" v-model="vault.body" placeholder="body">
@@ -26,6 +26,7 @@
       <form @submit.prevent="createKeep">
         <input type="text" v-model="keep.name" placeholder="keepname">
         <input type="text" v-model="keep.body" placeholder="URL">
+        <input type="text" v-model="keep.description" placeholder="description">
         <button type="submit" class="btn btn-primary">Create Keep</button>
       </form>
 

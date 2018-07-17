@@ -21,7 +21,7 @@ namespace API_Users.Controllers
       if(ModelState.IsValid)
       {
         var user = HttpContext.User;
-        newKeep.AuthorId = user.Identity.Name;
+        newKeep.userId = user.Identity.Name;
         return _db.CreateKeep(newKeep);
       }
       return null;
@@ -40,9 +40,9 @@ namespace API_Users.Controllers
     }
     //get keep by author
     [HttpGet("author/{id}")]
-    public IEnumerable<Keep> GetByAuthorId(int id)
+    public IEnumerable<Keep> GetByuserId(int id)
     {
-      return _db.GetbyAuthorId(id);
+      return _db.GetbyuserId(id);
     }
     //edit keep
     [HttpPut("{id}")]

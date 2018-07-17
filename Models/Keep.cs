@@ -8,8 +8,10 @@ public int Id { get; set; }
 public int ViewCount { get; set; }
 public int KeepCount { get; set; }
 public string Name { get; set; }
-public string Body { get; set; }
-public string AuthorId { get; set; }
+public string Description { get; set; }
+public string userId { get; set; }
+
+public string ImgURL {get; set;}
 
 }
 

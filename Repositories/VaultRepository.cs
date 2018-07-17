@@ -16,7 +16,7 @@ namespace API_Users.Repositories
         {
             int id = _db.ExecuteScalar<int>(@"
                 INSERT INTO vaults (name, description, userId)
-                VALUES (@Name, @Body, @AuthorId);
+                VALUES (@Name, @Body, @userId);
                 SELECT LAST_INSERT_ID();
             ", newVault);
             newVault.Id = id;
@@ -24,7 +24,7 @@ namespace API_Users.Repositories
         }
 
         // GetbyAuthor
-        public IEnumerable<Vault> GetbyAuthorId(int id)
+        public IEnumerable<Vault> GetbyuserId(int id)
         {
             return _db.Query<Vault>("SELECT * FROM vaults WHERE userId = @id;", new { id });
         }

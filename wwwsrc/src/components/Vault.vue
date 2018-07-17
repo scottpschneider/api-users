@@ -7,12 +7,9 @@
     </div>
     
     <div class="keeps row">
-      <form @submit.prevent="getVaultKeeps">
-        <button type="submit" class="btn btn-primary">Vault Keeps</button>
       <div v-for="keep in keeps" class="col-4" :key="keep.id">
         {{keep.name}}
       </div>
-      </form>
     </div>
   </div>
 </template>
@@ -25,8 +22,8 @@ export default {
     return {};
   },
   mounted() {
-    //fire off requst to get vault keeps
-    this.$store.dispatch({ getVaultKeeps: dispatch }, id);
+    //fire off request to get vault keeps
+    this.$store.dispatch("getVaultKeeps", this.vault.id);
   },
   computed: {
     vault() {
@@ -37,6 +34,7 @@ export default {
     }
   },
   methods: {
+    //dont need to uncomment this method because i created a mounted that loads this info upon page render. no user input, or submit required. 
     //this.$store.dispatch(getVaultKeeps, vaultKeeps)
   }
 };

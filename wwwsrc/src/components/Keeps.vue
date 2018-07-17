@@ -3,7 +3,11 @@
     <div class="keeps row">
         <div v-for="keep in keeps" class="col-4" :key="keep.id">
             {{keep.name}}
+            <!-- button with @click that will run method addKeeptoVault(keep) -->
         </div>
+        <select v-model="selectedVault">
+        <option v-for="vault in vaults" :value="vault" :key="vault.id">Add to {{vault.name}}</option>
+        </select>
     </div>
   </div>
 </template>
@@ -15,7 +19,9 @@ export default {
     this.$store.dispatch("getKeeps");
   },
   data() {
-    return {};
+    return {
+      selectedVault:{}
+    };
   },
   computed: {
     keeps() {
@@ -26,6 +32,9 @@ export default {
     }
   },
   methods: {
+    // named addkeeptovaults(keep)
+    //dispatch to store add keep to vault(keep.id, this.selectedvault.id)
+    //check above before dispaticnig if selected vault exxcists, has an id.. if selectedvault.id, run this, if not, please selectevav
     createKeep() {
       this.$store.dispatch("createKeep", this.newKeep);
     }

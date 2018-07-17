@@ -37,7 +37,7 @@ namespace API_Users.Repositories
         }
 
         // GetbyAuthor
-        public IEnumerable<VaultKeeps> GetbyAuthorId(int id)
+        public IEnumerable<VaultKeeps> GetbyuserId(int id)
         {
             return _db.Query<VaultKeeps>("SELECT * FROM vaultkeeps WHERE userId = @id;", new { id });
         }

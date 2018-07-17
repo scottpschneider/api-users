@@ -40,9 +40,9 @@ namespace API_Users.Controllers
     }
     //get vault by author
     [HttpGet("author/{id}")]
-    public IEnumerable<VaultKeeps> GetByAuthorId(int id)
+    public IEnumerable<VaultKeeps> GetByuserId(int id)
     {
-      return _db.GetbyAuthorId(id);
+      return _db.GetbyuserId(id);
     }
     //edit vault
     [HttpPut("{id}")]

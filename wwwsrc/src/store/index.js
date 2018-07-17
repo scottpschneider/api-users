@@ -27,7 +27,8 @@ export default new vuex.Store({
         activeKeep: {},
         userKeeps: [],
         vaults: [],
-        favorites: []
+        favorites: [], 
+        vaultKeeps: []
     },
     mutations: {
         deleteUser(state) {
@@ -70,7 +71,7 @@ export default new vuex.Store({
             state.vaults.splice(i, 1)
         },
         setVaultKeeps(state, vaultkeeps) {
-            state.vaultkeeps = vaultkeeps
+            state.vaultKeeps = vaultkeeps
         },
     },
     actions: {
@@ -86,7 +87,7 @@ export default new vuex.Store({
         getVaultKeeps({ commit, dispatch }, id) {
             server.get('/keep/vault/' + id)
                 .then(res => {
-                    commit("setUserKeeps", res.data)
+                    commit("setVaultKeeps", res.data)
                 })
                 .catch(err => {
                     console.log(err)
@@ -103,7 +104,7 @@ export default new vuex.Store({
         },
         createKeep({ commit, state }, keep) {
             keep.author = state.user.username
-            server.post('/keep/' + keep.vaultId, keep)
+            server.post('/keep', keep)
                 .then(res => {
                     commit("setNewKeep", res.data)
                 })
@@ -215,9 +216,13 @@ export default new vuex.Store({
         authenticate({ commit, dispatch }) {
             auth.get('authenticate')
                 .then(res => {
-                    commit('setUser', res.data)
-                    dispatch("getVaults")
-                    router.push({ name: 'HelloWorld' })
+                    if(res.status == 200){
+                        commit('setUser', res.data)
+                        dispatch("getVaults")
+                        router.push({ name: 'HelloWorld' })
+                    }else{
+                        router.push({ name: 'Auth'})
+                    }
                 })
                 .catch(res => {
                     console.log("auth error", res.data)
