@@ -73,6 +73,9 @@ export default new vuex.Store({
         setVaultKeeps(state, vaultkeeps) {
             state.vaultKeeps = vaultkeeps
         },
+        setNewVaultKeep(state, vaultkeep){
+            state.vaultKeeps.unshift(vaultKeep)
+        }
     },
     actions: {
         getKeeps({ commit, dispatch }) {
@@ -92,6 +95,16 @@ export default new vuex.Store({
                 .catch(err => {
                     console.log(err)
                 })
+        },
+        createVaultKeep({commit, dispatch}, vaultkeep){
+            server.post('/vaultkeep', vaultkeep)
+            .then(res => {
+                commit("setNewVaultKeep", res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            //only send over vaultId, keepId, userId, what is in vaultkeep model, then go thru controller/repo
         },
         getUserKeeps({ commit, state }) {
             server.get('/keep/user/' + state.user.id)
