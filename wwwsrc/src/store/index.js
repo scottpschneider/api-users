@@ -27,7 +27,7 @@ export default new vuex.Store({
         activeKeep: {},
         userKeeps: [],
         vaults: [],
-        favorites: [], 
+        favorites: [],
         vaultKeeps: []
     },
     mutations: {
@@ -73,7 +73,7 @@ export default new vuex.Store({
         setVaultKeeps(state, vaultkeeps) {
             state.vaultKeeps = vaultkeeps
         },
-        setNewVaultKeep(state, vaultkeep){
+        setNewVaultKeep(state, vaultkeep) {
             state.vaultKeeps.unshift(vaultKeep)
         }
     },
@@ -96,14 +96,14 @@ export default new vuex.Store({
                     console.log(err)
                 })
         },
-        createVaultKeep({commit, dispatch}, vaultkeep){
+        createVaultKeep({ commit, dispatch }, vaultkeep) {
             server.post('/vaultkeep', vaultkeep)
-            .then(res => {
-                commit("setNewVaultKeep", res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+                .then(res => {
+                    commit("setNewVaultKeep", res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             //only send over vaultId, keepId, userId, what is in vaultkeep model, then go thru controller/repo
         },
         getUserKeeps({ commit, state }) {
@@ -162,15 +162,6 @@ export default new vuex.Store({
                     commit('setVaultList', res.data)
                 })
         },
-        getVaults({ commit, dispatch, state }) {
-            server.get('vault/author/' + state.user.id)
-                .then(res => {
-                    commit("setVaults", res.data)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        },
         createVault({ commit, dispatch }, vault) {
             server.post('vault', vault)
                 .then(res => {
@@ -180,10 +171,22 @@ export default new vuex.Store({
                     console.log(err)
                 })
         },
+        getVaults({ commit, dispatch, state }) {
+            server.get('vault/author/' + state.user.id)
+                .then(res => {
+                    commit("setVaults", res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        },
         selectVault({ commit, dispatch }, vault) {
             commit("setActiveVault", vault)
             dispatch("getVaultKeeps", vault.id)
             router.push({ name: 'Vault', params: { id: vault.id } })
+        },
+        selectedVault({ commit, dispatch }, ) {
+            server.get('/vault/user/' + state)
         },
         deleteVault({ commit, dispatch }, vault) {
             server.delete('/vault/' + vault.id)
@@ -229,12 +232,12 @@ export default new vuex.Store({
         authenticate({ commit, dispatch }) {
             auth.get('authenticate')
                 .then(res => {
-                    if(res.status == 200){
+                    if (res.status == 200) {
                         commit('setUser', res.data)
                         dispatch("getVaults")
                         router.push({ name: 'HelloWorld' })
-                    }else{
-                        router.push({ name: 'Auth'})
+                    } else {
+                        router.push({ name: 'Auth' })
                     }
                 })
                 .catch(res => {

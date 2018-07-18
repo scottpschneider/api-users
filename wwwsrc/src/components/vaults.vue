@@ -20,6 +20,7 @@
 export default {
   name: "Vaults",
   mounted() {},
+  //does this need a mounted to getvaultkeeps? or am i confused with vaults
   data() {
     return {};
   },

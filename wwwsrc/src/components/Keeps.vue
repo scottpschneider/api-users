@@ -41,6 +41,9 @@ export default {
     createVaultKeep(newVaultKeep){
       this.$store.dispatch(newVaultKeep);
     },
+    addKeepToVaults(keep){
+      this.$store.dispatch(keep.id, this.selectedVault.id)
+    },
     // named addkeeptovaults(keep)
     //dispatch to store add keep to vault(keep.id, this.selectedvault.id)
     //check above before dispaticnig if selected vault exxcists, has an id.. if selectedvault.id, run this, if not, please selectevav

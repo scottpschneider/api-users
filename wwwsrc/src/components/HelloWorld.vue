@@ -66,10 +66,10 @@ export default {
       vault: {
         name: "",
         body: ""
-      }, 
+      },
       keep: {
-        name:"",
-        body:""
+        name: "",
+        body: ""
       }
     };
   },
@@ -86,7 +86,7 @@ export default {
     }
   },
   methods: {
-    createKeep(){
+    createKeep() {
       this.$store.dispatch("createKeep", this.keep);
     },
     createVault() {
@@ -95,8 +95,11 @@ export default {
     getVaults() {
       this.$store.dispatch("getVaults");
     },
-    logout(){
-      this.$store.dispatch("logout")
+    logout() {
+      this.$store.dispatch("logout");
+    },
+    selectVault() {
+      this.$store.dispatch("selectVault", this.vault);
     }
   }
 };
