@@ -28,7 +28,8 @@ export default new vuex.Store({
         userKeeps: [],
         vaults: [],
         favorites: [],
-        vaultKeeps: []
+        vaultKeeps: [], 
+        activeVault:{}
     },
     mutations: {
         deleteUser(state) {
@@ -161,6 +162,15 @@ export default new vuex.Store({
                 .then(res => {
                     commit('setVaultList', res.data)
                 })
+        },
+        addKeepToVaults({ commit, dispatch }, keep){
+            server.post('keep', keep)
+            .then(res=>{
+                commit("setNewVaultKeep", res.data)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
         },
         createVault({ commit, dispatch }, vault) {
             server.post('vault', vault)

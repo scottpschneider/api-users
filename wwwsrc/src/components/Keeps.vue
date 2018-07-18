@@ -23,9 +23,6 @@ export default {
     return {
       selectedVault:{},
       newVaultKeep:{
-        userId: this.user.id,
-        vaultId: selectedVault.id, 
-        keepId: this.keep.Id
       }
     };
   },
@@ -35,14 +32,20 @@ export default {
     },
     vaults() {
       return this.$store.state.vaults;
+    }, 
+    activeVault(){
+      return this.$store.state.activeVault;
     }
   },
   methods: {
     createVaultKeep(newVaultKeep){
+        newVaultKeep.userId = this.user.id,
+        newVaultKeep.vaultId = this.activeVault.id, 
+        newVaultKeep.keepId = this.keep.Id
       this.$store.dispatch(newVaultKeep);
     },
     addKeepToVaults(keep){
-      this.$store.dispatch(keep.id, this.selectedVault.id)
+      this.$store.dispatch("addKeepToVault", keep)
     },
     // named addkeeptovaults(keep)
     //dispatch to store add keep to vault(keep.id, this.selectedvault.id)

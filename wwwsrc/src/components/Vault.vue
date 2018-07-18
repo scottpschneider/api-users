@@ -23,7 +23,7 @@ export default {
   },
   mounted() {
     //fire off request to get vault keeps
-    this.$store.dispatch("getVaultKeeps", this.vault.id);
+    // this.$store.dispatch("getVaultKeeps", this.vault.id);
   },
   computed: {
     vault() {
