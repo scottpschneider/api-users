@@ -40,6 +40,7 @@ export default new vuex.Store({
         },
         setKeeps(state, keeps) {
             state.keeps = keeps
+            console.log(keeps)
         },
         setUserKeeps(state, keeps) {
             state.UserKeeps = keeps
@@ -99,7 +100,6 @@ export default new vuex.Store({
                 })
         },
         createVaultKeep({ commit, dispatch }, vaultkeep) {
-            debugger
             server.post('/vaultkeeps', vaultkeep)
                 .then(res => {
                     commit("setNewVaultKeep", res.data)
@@ -131,10 +131,10 @@ export default new vuex.Store({
         activeKeep({ commit }, keep) {
             commit("setActiveKeep", keep)
         },
-        editKeep({ commit }, keep) {
+        editKeep({ commit, dispatch }, keep) {
             server.put('/keep/' + keep.id, keep)
                 .then(res => {
-                    commit("setKeep", res.data)
+                    dispatch("getKeeps")
                 })
                 .catch(err => {
                     console.log(err)
@@ -143,7 +143,7 @@ export default new vuex.Store({
         selectKeep({ commit }, keep) {
             server.get('/keep/' + keep.id)
                 .then(res => {
-                    commit("setKeep", res.data)
+                    commit("setKeeps", res.data)
                     router.push({ name: "Keep", params: { keepId: res.data.id } })
                 })
                 .catch(err => {

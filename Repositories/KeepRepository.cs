@@ -44,9 +44,9 @@ namespace API_Users.Repositories
       var i = _db.Execute(@"
                 UPDATE keeps SET
                     name = @Name,
-                    desciption = @Description,
-                    viewcount = @ViewCount,
-                    keepcount = @KeepCount
+                    description = @Description,
+                    viewcount = @viewCount,
+                    keepcount = @keepCount
                 WHERE id = @Id
             ", keep);
       if (i > 0)
