@@ -28,8 +28,8 @@ export default new vuex.Store({
         userKeeps: [],
         vaults: [],
         favorites: [],
-        vaultKeeps: [], 
-        activeVault:{}
+        vaultKeeps: [],
+        activeVault: {}
     },
     mutations: {
         deleteUser(state) {
@@ -64,7 +64,7 @@ export default new vuex.Store({
             state.vaults.unshift(vault)
         },
         setActiveVault(state, vaultId) {
-            var vault = state.vaults.find(v=> v.id == vaultId)
+            var vault = state.vaults.find(v => v.id == vaultId)
             state.activeVault = vault
         },
         removeVault(state, vault) {
@@ -102,6 +102,8 @@ export default new vuex.Store({
         createVaultKeep({ commit, dispatch }, vaultkeep) {
             server.post('/vaultkeeps', vaultkeep)
                 .then(res => {
+                    vaultkeep.keep.keepCount++;
+                    dispatch("editKeep", vaultkeep.keep);
                     commit("setNewVaultKeep", res.data)
                 })
                 .catch(err => {
@@ -165,14 +167,14 @@ export default new vuex.Store({
                     commit('setVaultList', res.data)
                 })
         },
-        addKeepToVault({ commit, dispatch }, keep){
+        addKeepToVault({ commit, dispatch }, keep) {
             server.post('/vaultkeep', keep)
-            .then(res=>{
-                commit("setNewVaultKeep", res.data)
-            })
-            .catch(err=>{
-                console.log(err)
-            })
+                .then(res => {
+                    commit("setNewVaultKeep", res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         },
         createVault({ commit, dispatch }, vault) {
             server.post('vault', vault)

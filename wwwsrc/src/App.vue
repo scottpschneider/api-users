@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    De<img src="./assets/logo.png">elop
+    <!-- De<img src="./assets/logo.png">elop -->
     <router-view/>
   </div>
 </template>

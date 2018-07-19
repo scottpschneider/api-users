@@ -7,7 +7,7 @@
     </div>
     
     <div class="keeps row">
-      <div v-for="keep in keeps" class="col-4" :key="keep.id">
+      <div v-for="(keep, index) in keeps" class="col-4" :key="index">
         {{keep.name}}
       </div>
     </div>

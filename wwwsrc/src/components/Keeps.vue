@@ -1,17 +1,18 @@
 <template>
   <div class="container-fluid">
     <div class="keeps row">
-      <div v-for="keep in keeps" class="col-4" :key="keep.id">
+      <div v-for="(keep, index) in keeps" class="col-4" :key="index">
         {{keep.name}} Views: {{keep.viewCount}} Keeps: {{keep.keepCount}}
         <button @click="addKeepToVault(keep)">Add to vault</button>
 
         <button @click="viewKeep(keep)">View Keep</button>
 
         <!-- button with @click that will run method addKeeptoVault(keep) -->
+        <!-- use a vif and say if not logged in, dont show the "addtovault" text. div v-if currentuser.id -->
         <select v-model="selectedVault">
-          <!-- use a vif and say if not logged in, dont show the "addtovault" text. div v-if currentuser.id -->
           <option v-for="vault in vaults" :value="vault" :key="vault.id">Add to {{vault.name}}</option>
         </select>
+        
       </div>
     </div>
     <div class="modal" id="keepMyViewKeep" tabindex="-1" role="dialog">
@@ -19,6 +20,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">{{userViewKeep.name}}</h5>
+            <img :src="userViewKeep.imgURL" alt="">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -68,9 +70,8 @@
         this.$store.dispatch(newVaultKeep);
       },
       addKeepToVault(keep) {
-        keep.keepCount++;
-        this.$store.dispatch("editKeep", keep);
         this.$store.dispatch("createVaultKeep", {
+          keep: keep,
           keepId: keep.id,
           vaultId: this.selectedVault.id
         });
