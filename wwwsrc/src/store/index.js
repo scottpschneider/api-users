@@ -76,7 +76,7 @@ export default new vuex.Store({
         setVaultKeeps(state, vaultkeeps) {
             state.vaultKeeps = vaultkeeps
         },
-        setNewVaultKeep(state, vaultkeep) {
+        setNewVaultKeep(state, vaultKeep) {
             state.vaultKeeps.unshift(vaultKeep)
         }
     },
