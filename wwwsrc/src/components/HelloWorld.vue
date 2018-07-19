@@ -11,7 +11,7 @@
             <div class="row -flex justify-content-center">
       <div class="HelloWorld">
         <div class="desc container-fluid">
-          <h3>Submit fav URLs {{user.userName}}</h3>
+          <h3>Submit fav URLs {{ user.userName}}</h3>
           <h4>Share/Keep in your own vault</h4>
         </div>
          <div class="container">
@@ -25,7 +25,7 @@
 
       <form @submit.prevent="createKeep">
         <input type="text" v-model="keep.name" placeholder="keepname">
-        <input type="text" v-model="keep.body" placeholder="URL">
+        <input type="text" v-model="keep.imgUrl" placeholder="URL">
         <input type="text" v-model="keep.description" placeholder="description">
         <button type="submit" class="btn btn-primary">Create Keep</button>
       </form>
@@ -69,7 +69,8 @@ export default {
       },
       keep: {
         name: "",
-        body: ""
+        imgUrl: ""
+
       }
     };
   },

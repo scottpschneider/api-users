@@ -27,28 +27,31 @@ namespace API_Users.Controllers
       return null;
     }
     //get all vaultkeeps
-    [HttpGet]
-    public IEnumerable<VaultKeeps> GetAll()
+    [HttpGet("{vaultId}")]
+    public IEnumerable<Keep> getKeepsByVaultId(int vaultId)
     {
-      return _db.GetAll();
+      return _db.GetKeepsByVaultId(vaultId);
     }
-    //get vaultkeep by id
-    [HttpGet("{id}")]
-    public IEnumerable<Keep> GetbyVaultKeepsId(int id)
-    {
-      return _db.GetbyVaultKeepsId(id);
-    }
-    //get vault by author
-    [HttpGet("author/{id}")]
-    public IEnumerable<VaultKeeps> GetByuserId(int id)
-    {
-      return _db.GetbyuserId(id);
-    }
-    //edit vault
-    [HttpPut("{id}")]
-    public VaultKeeps EditVaultKeeps(int id, [FromBody]VaultKeeps newVaultKeeps)
-    {
-      return _db.EditVaultKeeps(id, newVaultKeeps);
-    }
+
+
+
+    // //get vaultkeep by id
+    // [HttpGet("{id}")]
+    // public IEnumerable<Keep> GetbyVaultKeepsId(int id)
+    // {
+    //   return _db.GetbyVaultKeepsId(id);
+    // }
+    // //get vault by author
+    // [HttpGet("author/{id}")]
+    // public IEnumerable<VaultKeeps> GetByuserId(int id)
+    // {
+    //   return _db.GetbyuserId(id);
+    // }
+    // //edit vault
+    // [HttpPut("{id}")]
+    // public VaultKeeps EditVaultKeeps(int id, [FromBody]VaultKeeps newVaultKeeps)
+    // {
+    //   return _db.EditVaultKeeps(id, newVaultKeeps);
+    // }
   }
 }

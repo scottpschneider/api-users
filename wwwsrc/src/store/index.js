@@ -45,7 +45,7 @@ export default new vuex.Store({
             state.UserKeeps = keeps
         },
         setNewKeep(state, keep) {
-            state.userKeeps.unshift(keep)
+            state.keeps.unshift(keep)
         },
         removeKeep(state, id) {
             var i = state.userKeeps.findIndex(keep => {
@@ -62,7 +62,8 @@ export default new vuex.Store({
         setNewVault(state, vault) {
             state.vaults.unshift(vault)
         },
-        setActiveVault(state, vault) {
+        setActiveVault(state, vaultId) {
+            var vault = state.vaults.find(v=> v.id == vaultId)
             state.activeVault = vault
         },
         removeVault(state, vault) {
@@ -89,7 +90,7 @@ export default new vuex.Store({
                 })
         },
         getVaultKeeps({ commit, dispatch }, id) {
-            server.get('/keep/vault/' + id)
+            server.get('/vaultkeeps/' + id)
                 .then(res => {
                     commit("setVaultKeeps", res.data)
                 })
@@ -98,7 +99,8 @@ export default new vuex.Store({
                 })
         },
         createVaultKeep({ commit, dispatch }, vaultkeep) {
-            server.post('/vaultkeep', vaultkeep)
+            debugger
+            server.post('/vaultkeeps', vaultkeep)
                 .then(res => {
                     commit("setNewVaultKeep", res.data)
                 })
@@ -163,8 +165,8 @@ export default new vuex.Store({
                     commit('setVaultList', res.data)
                 })
         },
-        addKeepToVaults({ commit, dispatch }, keep){
-            server.post('keep', keep)
+        addKeepToVault({ commit, dispatch }, keep){
+            server.post('/vaultkeep', keep)
             .then(res=>{
                 commit("setNewVaultKeep", res.data)
             })
@@ -192,8 +194,6 @@ export default new vuex.Store({
         },
         selectVault({ commit, dispatch }, vault) {
             commit("setActiveVault", vault)
-            dispatch("getVaultKeeps", vault.id)
-            router.push({ name: 'Vault', params: { id: vault.id } })
         },
         selectedVault({ commit, dispatch }, ) {
             server.get('/vault/user/' + state)

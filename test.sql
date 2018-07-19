@@ -25,6 +25,8 @@
 --     description VARCHAR(255) NOT NULL,
 --     imgURL VARCHAR(255) NOT NULL,
 --     userId VARCHAR(255),
+--     viewcount int,
+--     keepcount int,
 --     INDEX userId (userId),
 --     PublicPrivate tinyint(1),
 --     FOREIGN KEY (userId)

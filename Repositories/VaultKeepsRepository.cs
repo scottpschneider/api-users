@@ -24,39 +24,53 @@ namespace API_Users.Repositories
             return newVaultKeeps;
         }
 
-        // GetAll VaultKeeps
-        public IEnumerable<VaultKeeps> GetAll()
-        {
-            return _db.Query<VaultKeeps>("SELECT * FROM keeps;");
+
+
+        public IEnumerable<Keep> GetKeepsByVaultId(int vaultId){
+           return _db.Query<Keep>(@"
+            SELECT * FROM vaultkeeps vk
+            INNER JOIN keeps k ON k.id = vk.keepId 
+            WHERE (vaultId = @vaultId)", new {vaultId});
         }
 
-        //GetbyVaultKeepsId
-        public IEnumerable<Keep> GetbyVaultKeepsId(int id)
-        {
-            return _db.Query<Keep>("SELECT * FROM vaultkeeps");
-        }
 
-        // GetbyAuthor
-        public IEnumerable<VaultKeeps> GetbyuserId(int id)
-        {
-            return _db.Query<VaultKeeps>("SELECT * FROM vaultkeeps WHERE userId = @id;", new { id });
-        }
+
+
+
+
+        // // GetAll VaultKeeps
+        // public IEnumerable<VaultKeeps> GetAll()
+        // {
+        //     return _db.Query<VaultKeeps>("SELECT * FROM keeps;");
+        // }
+
+        // //GetbyVaultKeepsId
+        // public IEnumerable<Keep> GetbyVaultKeepsId(int id)
+        // {
+        //     return _db.Query<Keep>("SELECT * FROM vaultkeeps");
+        // }
+
+        // // GetbyAuthor
+        // public IEnumerable<VaultKeeps> GetbyuserId(int id)
+        // {
+        //     return _db.Query<VaultKeeps>("SELECT * FROM vaultkeeps WHERE userId = @id;", new { id });
+        // }
 
         // Edit
-        public VaultKeeps EditVaultKeeps(int id, VaultKeeps vaultkeeps)
-        {
-            vaultkeeps.Id = id;
-            var i = _db.Execute(@"
-                UPDATE vaultkeeps SET
-                    title = @Title,
-                    body = @Body
-                WHERE id = @Id
-            ", vaultkeeps);
-            if (i > 0)
-            {
-                return vaultkeeps;
-            }
-            return null;
-        }
+        // public VaultKeeps EditVaultKeeps(int id, VaultKeeps vaultkeeps)
+        // {
+        //     vaultkeeps.Id = id;
+        //     var i = _db.Execute(@"
+        //         UPDATE vaultkeeps SET
+        //             title = @Title,
+        //             body = @Body
+        //         WHERE id = @Id
+        //     ", vaultkeeps);
+        //     if (i > 0)
+        //     {
+        //         return vaultkeeps;
+        //     }
+        //     return null;
+        // }
     }
 }

@@ -3,9 +3,9 @@
     <div class="vaults row">
       <div class="col-4" v-for="vault in vaults" :key="vault.id">
         <div class="text-center">
-          <a @click="selectVault(vault)">
+          <router-link :to="{name: 'Vault', params: {vaultId: vault.id}}">
             <p>{{vault.name}}</p>
-          </a>
+          </router-link>
           <div>
             <button class="btn btn-danger" @click="deleteVault(vault)">Delete Vault</button>
           </div>
@@ -33,9 +33,9 @@ export default {
     }
   },
   methods: {
-    selectVault(vault) {
-      this.$store.dispatch("selectVault", vault);
-    },
+    // selectVault(vault) {
+    //   this.$store.dispatch("selectVault", vault);
+    // },
     deleteVault(vault) {
       this.$store.dispatch("deleteVault", vault);
     }

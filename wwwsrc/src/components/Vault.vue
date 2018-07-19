@@ -21,9 +21,11 @@ export default {
   data() {
     return {};
   },
+  props: ["vaultId"],
   mounted() {
     //fire off request to get vault keeps
-    // this.$store.dispatch("getVaultKeeps", this.vault.id);
+    this.$store.dispatch("getVaultKeeps", this.vaultId);
+    this.$store.dispatch("selectVault", this.vaultId)
   },
   computed: {
     vault() {

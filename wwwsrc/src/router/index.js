@@ -29,7 +29,8 @@ export default new Router({
       component: Favorites
     },
     {
-      path: '/vault/:id',
+      path: '/vault/:vaultId',
+      props: true,
       name: 'Vault',
       component: Vault
     },
