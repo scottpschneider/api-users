@@ -7,7 +7,7 @@
         <div class="user form-inline my-2 my-lg-0">
           {{user.userName}}
         </div>
-        <button class="button" @click="logout">Log Out</button>
+        <button class="button" @click="logout">Log Out of Keepr</button>
             <div class="row -flex justify-content-center">
       <div class="HelloWorld">
         <div class="desc container-fluid">

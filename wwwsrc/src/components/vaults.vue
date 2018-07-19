@@ -7,7 +7,7 @@
             <p>{{vault.name}}</p>
           </a>
           <div>
-            <button class="btn btn-danger" @click="deleteVault(vault)">Delete</button>
+            <button class="btn btn-danger" @click="deleteVault(vault)">Delete Vault</button>
           </div>
         </div>
       </div>
