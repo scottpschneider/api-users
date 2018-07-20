@@ -11,7 +11,7 @@
             <div class="row -flex justify-content-center">
       <div class="HelloWorld">
         <div class="desc container-fluid">
-          <h3>Submit fav URLs {{ user.userName}}</h3>
+          <h3>{{user.username}} Submit fav URLs</h3>
           <h4>Share/Keep in your own vault</h4>
         </div>
          <div class="container">
