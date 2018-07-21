@@ -3,7 +3,7 @@
     <div class="keeps row">
       <div v-for="(keep, index) in keeps" class="col-4" :key="index">
         {{keep.name}} Views: {{keep.viewCount}} Keeps: {{keep.keepCount}}
-        {{userViewKeep.imgURL}}
+        {{keep.imgURL}}
           <button @click="addKeepToVault(keep)">Add to vault</button>
 
           <button @click="viewKeep(keep)">View Keep</button>
