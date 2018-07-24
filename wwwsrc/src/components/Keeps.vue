@@ -2,8 +2,8 @@
   <div class="container-fluid">
     <div class="keeps row">
       <div v-for="(keep, index) in keeps" class="col-4" :key="index">
-        {{keep.name}} Views: {{keep.viewCount}} Keeps: {{keep.keepCount}}
-        {{userViewKeep.imgURL}}
+        {{keep.name}} Views: {{keep.viewCount}} Number of Keeps: {{keep.keepCount}}
+        {{userViewKeep.imgURL}} 
         <img :src="userViewKeep.imgURL" alt="">
           <button @click="addKeepToVault(keep)">Add to vault</button>
 
