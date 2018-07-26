@@ -2,8 +2,8 @@
   <div class="container-fluid">
     <div class="keeps row">
       <div v-for="(keep, index) in keeps" class="col-4" :key="index">
-        {{keep.name}} Views: {{keep.viewCount}} Number of Keeps: {{keep.keepCount}}
-        {{userViewKeep.imgURL}} 
+        {{keep.name}} Views: {{keep.viewCount}} Keeps: {{keep.keepCount}}
+        <!-- Image: {{<img :src="userViewKeep.imgURL" alt="">}}  -->
         <img :src="userViewKeep.imgURL" alt="">
           <button @click="addKeepToVault(keep)">Add to vault</button>
 
@@ -36,6 +36,12 @@
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <div v-for="(keep, index) in keeps" class="col-4" :key="index">
+          {{keep.name}} 
+            <button @click="deleteKeep">Delete {{keep.name}}</button>
+            </div>
       </div>
     </div>
 </template>
@@ -91,7 +97,13 @@
       //check above before dispaticnig if selected vault exxcists, has an id.. if selectedvault.id, run this, if not, please selectevav
       createKeep() {
         this.$store.dispatch("createKeep", this.newKeep);
-      }
+      }, 
+      deleteKeep(keep){
+        this.$store.dispatch("deleteKeep", {
+          keep: keep,
+          keepId: keep.id,
+        });
+      },
     }
   };
 </script>
