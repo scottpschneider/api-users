@@ -120,7 +120,7 @@ export default {
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: white;
-    height: 100vh;
+    height: 150vh;
   }
 }
 </style>
